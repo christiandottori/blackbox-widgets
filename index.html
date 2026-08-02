@@ -45,10 +45,17 @@
 </div>
 <script>
 const W=[
+  {f:'header.html',   t:'Header animato',    d:'Intestazione cinematografica con glow e sheen. Bella in cima alle pagine.'},
   {f:'clock.html',    t:'Orologio + Data',   d:'Ora e data live (Como/Ticino), aggiornamento al secondo.'},
   {f:'countdown.html',t:'Countdown',         d:'Conto alla rovescia verso una data. Personalizza con ?to=2026-12-31&label=Lancio'},
   {f:'kpi.html',      t:'Cruscotto KPI',     d:'Progresso anno, target MRR e progetti attivi. Numeri nel file.'},
-  {f:'payoff.html',   t:'Payoff rotante',    d:'Header brand che alterna i payoff. Bello in cima alle pagine.'}
+  {f:'counters.html', t:'Contatori animati', d:'KPI che salgono in count-up. Numeri modificabili nel file.'},
+  {f:'payoff.html',   t:'Payoff rotante',    d:'Header brand che alterna i payoff.'},
+  {f:'storage.html',  t:'Storage & Timecode',d:'GB per minuti (ProRes/BRAW/H.264) + durata↔frame. Da set.'},
+  {f:'convert.html',  t:'EUR ⇄ CHF',         d:'Convertitore valuta con cambio live (utile per il Ticino).'},
+  {f:'preventivo.html',t:'Preventivo lampo', d:'Stima rapida: giornate riprese + montaggio + extra.'},
+  {f:'timer.html',    t:'Focus Timer',       d:'Pomodoro brandizzato per le sessioni di montaggio.'},
+  {f:'brand.html',    t:'Brand Kit',         d:'Swatch colori (clic per copiare hex) + font di riferimento.'}
 ];
 const grid=document.getElementById('grid');
 W.forEach(w=>{

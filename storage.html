@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Storage & Timecode</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:16px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .head .kick{font-size:clamp(8px,1.5vw,11px);letter-spacing:2px;}
+  .in{display:flex;gap:10px;width:100%;flex-wrap:wrap;}
+  .fld{flex:1;min-width:120px;}
+  .fld label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
+  .fld input,.fld select{width:100%;background:#000;border:1px solid var(--line);border-radius:9px;color:#fff;font-size:14px;padding:10px 12px;font-family:var(--sans);}
+  .out{display:flex;gap:12px;width:100%;margin-top:18px;}
+  .box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:16px;}
+  .box .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .box .big{font-family:var(--hit);font-weight:800;font-size:clamp(24px,5vw,40px);line-height:1;margin-top:8px;}
+  .box .big span{color:var(--red);font-size:.55em;}
+  .box .sub{font-size:11px;color:#9a9aa2;margin-top:6px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick">Storage &amp; Timecode</span></div>
+  <div class="in">
+    <div class="fld"><label>Durata (min)</label><input id="min" type="number" value="10" min="0" step="0.5"></div>
+    <div class="fld"><label>Codec / Risoluzione</label><select id="codec"></select></div>
+    <div class="fld"><label>Frame rate</label><select id="fps">
+      <option>23.976</option><option>24</option><option selected>25</option><option>30</option><option>50</option><option>60</option>
+    </select></div>
+  </div>
+  <div class="out">
+    <div class="box"><div class="t">Spazio richiesto</div><div class="big" id="gb">—</div><div class="sub" id="gbsub"></div></div>
+    <div class="box"><div class="t">Timecode</div><div class="big" id="tc" style="font-size:clamp(20px,4vw,32px)">—</div><div class="sub" id="frames"></div></div>
+  </div>
+</div>
+<script>
+/* bitrate approssimati in Mbps */
+const CODECS=[
+  ["ProRes 422 HQ · 4K",880],["ProRes 422 · 4K",590],["ProRes 422 HQ · 1080p",220],["ProRes 422 · 1080p",147],
+  ["BRAW 5:1 · 4K",130],["H.264/265 · 4K",100],["H.264/265 · 1080p",25]
+];
+const sel=document.getElementById('codec');
+CODECS.forEach((c,i)=>{const o=document.createElement('option');o.value=c[1];o.textContent=c[0];if(i==2)o.selected=true;sel.appendChild(o);});
+function p(n){return String(n).padStart(2,'0');}
+function calc(){
+  const min=parseFloat(document.getElementById('min').value)||0;
+  const mbps=parseFloat(sel.value);
+  const fps=parseFloat(document.getElementById('fps').value);
+  const gb=mbps*min*60/8/1000;
+  document.getElementById('gb').innerHTML=(gb<10?gb.toFixed(1):Math.round(gb))+'<span> GB</span>';
+  document.getElementById('gbsub').textContent=mbps+' Mbps · '+(gb*1000|0)+' MB';
+  const totSec=min*60; const totFrames=Math.round(totSec*fps);
+  const h=Math.floor(totSec/3600),m=Math.floor(totSec%3600/60),s=Math.floor(totSec%60);
+  document.getElementById('tc').textContent=p(h)+':'+p(m)+':'+p(s);
+  document.getElementById('frames').textContent=totFrames.toLocaleString('it-IT')+' frame @ '+fps+'fps';
+}
+document.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',calc));
+calc();
+</script></body></html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Contatori</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;justify-content:center;}
+  .head{position:absolute;top:clamp(16px,3vw,26px);left:clamp(16px,4vw,34px);}
+  .head .wm{font-family:var(--hit);font-weight:800;font-size:clamp(13px,2.4vw,17px);}
+  .row{display:flex;width:100%;gap:clamp(6px,2vw,14px);margin-top:18px;}
+  .st{flex:1;text-align:center;padding:0 4px;position:relative;}
+  .st+.st::before{content:'';position:absolute;left:0;top:12%;height:76%;width:1px;background:var(--line);}
+  .st .n{font-family:var(--hit);font-weight:800;font-size:clamp(28px,7vw,60px);line-height:1;}
+  .st .n span{color:var(--red);}
+  .st .l{font-size:clamp(9px,1.5vw,12px);color:var(--muted);margin-top:10px;letter-spacing:.5px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span></div>
+  <div class="row" id="row"></div>
+</div>
+<script>
+/* ==== MODIFICA QUI ==== */
+const STATS=[
+  {n:120,suf:"+",lab:"Progetti realizzati"},
+  {n:5,suf:"",lab:"Anni di esperienza"},
+  {n:40,suf:"+",lab:"Clienti felici"},
+  {n:100,suf:"%",lab:"Girato in casa"}
+];
+/* ====================== */
+const row=document.getElementById('row');
+STATS.forEach(s=>{const d=document.createElement('div');d.className='st';
+  d.innerHTML='<div class="n"><b>0</b><span>'+s.suf+'</span></div><div class="l">'+s.lab+'</div>';row.appendChild(d);});
+const nums=row.querySelectorAll('.n b');
+STATS.forEach((s,i)=>{
+  const el=nums[i];let cur=0;const step=Math.max(1,Math.ceil(s.n/45));
+  const iv=setInterval(()=>{cur+=step;if(cur>=s.n){cur=s.n;clearInterval(iv);}el.textContent=cur;},22);
+});
+</script></body></html>

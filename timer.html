@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Focus Timer</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:center;text-align:center;justify-content:center;}
+  .modes{display:flex;gap:8px;margin-bottom:6px;}
+  .modes button{background:transparent;border:1px solid var(--line);color:#9a9aa2;font-family:var(--hit);font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:100px;cursor:pointer;}
+  .modes button.on{background:var(--red);border-color:var(--red);color:#fff;}
+  .time{font-family:var(--hit);font-weight:800;font-size:clamp(56px,17vw,130px);line-height:1;letter-spacing:-2px;margin:6px 0;}
+  .ctrl{display:flex;gap:10px;}
+  .ctrl button{border:none;border-radius:100px;font-family:var(--sans);font-weight:600;font-size:14px;padding:12px 26px;cursor:pointer;}
+  .go{background:var(--red);color:#fff;}
+  .rs{background:var(--bg2);color:#cfcfd4;border:1px solid var(--line)!important;}
+  .dots{margin-top:16px;display:flex;gap:7px;}
+  .dots i{width:9px;height:9px;border-radius:50%;background:#2a2a30;}
+  .dots i.done{background:var(--red);}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="modes">
+    <button id="mFocus" class="on" data-min="25">Focus 25</button>
+    <button id="mBreak" data-min="5">Pausa 5</button>
+  </div>
+  <div class="time" id="t">25:00</div>
+  <div class="ctrl">
+    <button class="go" id="go">Avvia</button>
+    <button class="rs" id="rs">Reset</button>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+<script>
+let total=25*60,left=total,run=false,iv=null,done=0;
+function p(n){return String(n).padStart(2,'0');}
+function show(){document.getElementById('t').textContent=p(Math.floor(left/60))+':'+p(left%60);}
+function setMode(min,btn){
+  clearInterval(iv);run=false;document.getElementById('go').textContent='Avvia';
+  document.querySelectorAll('.modes button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  total=min*60;left=total;show();
+}
+document.getElementById('mFocus').onclick=e=>setMode(25,e.target);
+document.getElementById('mBreak').onclick=e=>setMode(5,e.target);
+document.getElementById('go').onclick=()=>{
+  if(run){clearInterval(iv);run=false;document.getElementById('go').textContent='Riprendi';return;}
+  run=true;document.getElementById('go').textContent='Pausa';
+  iv=setInterval(()=>{
+    left--;show();
+    if(left<=0){clearInterval(iv);run=false;document.getElementById('go').textContent='Avvia';
+      if(document.getElementById('mFocus').classList.contains('on')){done=Math.min(done+1,8);draw();}
+      left=total;show();}
+  },1000);
+};
+document.getElementById('rs').onclick=()=>{clearInterval(iv);run=false;left=total;show();document.getElementById('go').textContent='Avvia';};
+function draw(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<8;i++){const s=document.createElement('i');if(i<done)s.className='done';d.appendChild(s);}}
+draw();show();
+</script></body></html>

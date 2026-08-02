@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Preventivo lampo</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .head .kick{font-size:clamp(8px,1.5vw,11px);letter-spacing:2px;}
+  .grid{display:flex;gap:12px;width:100%;}
+  .col{flex:1;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;}
+  .row label{color:#cfcfd4;}
+  .row input[type=number]{width:64px;background:#000;border:1px solid var(--line);border-radius:7px;color:#fff;padding:6px 8px;font-family:var(--sans);text-align:center;}
+  .chk{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;color:#cfcfd4;cursor:pointer;}
+  .chk input{width:16px;height:16px;accent-color:var(--red);}
+  .tot{width:100%;margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:flex;align-items:baseline;justify-content:space-between;}
+  .tot .t{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .tot .big{font-family:var(--hit);font-weight:800;font-size:clamp(26px,6vw,44px);}
+  .tot .big span{color:var(--red);font-size:.5em;}
+  .note{font-size:10px;color:#6a6a72;margin-top:10px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick">Preventivo lampo</span></div>
+  <div class="grid">
+    <div class="col">
+      <div class="row"><label>Giornate riprese</label><input type="number" id="rip" value="1" min="0" data-e="800"></div>
+      <div class="row"><label>Giorni montaggio</label><input type="number" id="mon" value="2" min="0" data-e="400"></div>
+      <div class="row"><label>Giorni foto</label><input type="number" id="fot" value="0" min="0" data-e="600"></div>
+    </div>
+    <div class="col" id="extra">
+      <label class="chk"><input type="checkbox" data-e="250"> Riprese drone</label>
+      <label class="chk"><input type="checkbox" data-e="300"> Color grading pro</label>
+      <label class="chk"><input type="checkbox" data-e="500"> Pacchetto social/reel</label>
+      <label class="chk"><input type="checkbox" data-e="350"> Troupe extra / 2ª cam</label>
+    </div>
+  </div>
+  <div class="tot"><span class="t">Stima totale</span><span class="big" id="out">€0<span></span></span></div>
+  <div class="note">Stima indicativa, IVA esclusa. Tariffe modificabili negli attributi <code>data-e</code> del file.</div>
+</div>
+<script>
+function calc(){
+  let t=0;
+  document.querySelectorAll('input[type=number]').forEach(i=>{t+=(parseFloat(i.value)||0)*parseFloat(i.dataset.e);});
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>{if(c.checked)t+=parseFloat(c.dataset.e);});
+  document.getElementById('out').innerHTML='€'+t.toLocaleString('it-IT');
+}
+document.querySelectorAll('input').forEach(e=>e.addEventListener('input',calc));
+calc();
+</script></body></html>

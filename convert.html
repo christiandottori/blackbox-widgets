@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · EUR ⇄ CHF</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:16px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .head .kick{font-size:clamp(8px,1.5vw,11px);letter-spacing:2px;}
+  .conv{display:flex;align-items:center;gap:12px;width:100%;}
+  .amt{flex:1;}
+  .amt label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
+  .amt input{width:100%;background:#000;border:1px solid var(--line);border-radius:10px;color:#fff;font-family:var(--hit);font-weight:800;font-size:clamp(20px,4vw,30px);padding:12px 14px;}
+  .cur{font-family:var(--hit);font-weight:800;font-size:14px;color:var(--muted);padding-bottom:12px;}
+  .swap{margin-top:18px;width:44px;height:44px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:18px;cursor:pointer;align-self:flex-end;flex-shrink:0;}
+  .res{width:100%;margin-top:18px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:18px;}
+  .res .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .res .big{font-family:var(--hit);font-weight:800;font-size:clamp(26px,6vw,46px);line-height:1;margin-top:8px;}
+  .res .big span{color:var(--red);font-size:.5em;}
+  .rate{font-size:11px;color:#9a9aa2;margin-top:auto;padding-top:14px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick" id="dir">EUR → CHF</span></div>
+  <div class="conv">
+    <div class="amt"><label id="froml">Importo (EUR)</label><input id="amt" type="number" value="1000" min="0"></div>
+    <button class="swap" id="swap" title="Inverti">⇅</button>
+  </div>
+  <div class="res"><div class="t" id="tol">Convertito in CHF</div><div class="big" id="out">—</div></div>
+  <div class="rate" id="rate">Recupero il cambio…</div>
+</div>
+<script>
+let from='EUR',to='CHF',rate=null,when='';
+async function load(){
+  try{
+    const r=await fetch('https://api.frankfurter.app/latest?from='+from+'&to='+to);
+    const d=await r.json(); rate=d.rates[to]; when=d.date;
+    document.getElementById('rate').textContent='1 '+from+' = '+rate.toFixed(4)+' '+to+' · aggiornato '+when.split('-').reverse().join('/');
+  }catch(e){ rate=(from==='EUR'?0.94:1.064); document.getElementById('rate').textContent='Cambio offline (stima 1 '+from+' ≈ '+rate.toFixed(3)+' '+to+')'; }
+  calc();
+}
+function calc(){
+  if(rate===null)return;
+  const a=parseFloat(document.getElementById('amt').value)||0;
+  const v=a*rate;
+  document.getElementById('out').innerHTML=v.toLocaleString('it-IT',{maximumFractionDigits:2})+' <span>'+to+'</span>';
+}
+document.getElementById('swap').onclick=()=>{
+  [from,to]=[to,from];
+  document.getElementById('dir').textContent=from+' → '+to;
+  document.getElementById('froml').textContent='Importo ('+from+')';
+  document.getElementById('tol').textContent='Convertito in '+to;
+  load();
+};
+document.getElementById('amt').addEventListener('input',calc);
+load();
+</script></body></html>
