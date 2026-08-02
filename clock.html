@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Orologio</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;}
+  .top{display:flex;align-items:center;justify-content:space-between;width:100%;}
+  .top .wm{font-size:clamp(13px,2.6vw,18px);}
+  .top .loc{font-family:var(--hit);font-weight:700;font-size:clamp(8px,1.6vw,11px);letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .time{font-family:var(--hit);font-weight:800;line-height:.9;letter-spacing:-1px;
+    font-size:clamp(46px,15vw,120px);margin-top:auto;}
+  .time .sec{color:var(--red);}
+  .date{font-size:clamp(12px,3vw,20px);color:#cfcfd4;margin-top:6px;text-transform:capitalize;}
+  .bar{width:44px;height:3px;background:var(--red);margin-top:14px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="top"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="loc">Como · Ticino</span></div>
+  <div class="time" id="t">--:--<span class="sec">:--</span></div>
+  <div class="date" id="d">—</div>
+  <div class="bar"></div>
+</div>
+<script>
+const gg=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+const mm=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+function p(n){return String(n).padStart(2,'0');}
+function tick(){
+  const n=new Date();
+  document.getElementById('t').innerHTML=p(n.getHours())+':'+p(n.getMinutes())+'<span class="sec">:'+p(n.getSeconds())+'</span>';
+  document.getElementById('d').textContent=gg[n.getDay()]+' '+n.getDate()+' '+mm[n.getMonth()]+' '+n.getFullYear();
+}
+tick();setInterval(tick,1000);
+</script></body></html>

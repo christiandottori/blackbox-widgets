@@ -1,0 +1,32 @@
+/* BlackBox widgets — base brand styles */
+@font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-800.ttf') format('truetype');font-weight:800;font-display:swap;}
+@font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-700.ttf') format('truetype');font-weight:700;font-display:swap;}
+@font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-500.ttf') format('truetype');font-weight:500;font-display:swap;}
+@font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-400.ttf') format('truetype');font-weight:400;font-display:swap;}
+:root{
+  --red:#e11d2a; --bg:#0a0a0b; --bg2:#141418;
+  --ink:#ffffff; --muted:#8a8a92; --line:#232329;
+  --hit:'Hitmarker',-apple-system,Arial,sans-serif;
+  --sans:'Inter',-apple-system,'Segoe UI',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  font-family:var(--sans); color:var(--ink);
+  background:transparent; -webkit-font-smoothing:antialiased;
+  display:flex; align-items:stretch; justify-content:stretch;
+  overflow:hidden;
+}
+.card{
+  position:relative; flex:1; margin:0; border-radius:18px;
+  background:radial-gradient(120% 140% at 85% -20%,rgba(225,29,42,.14),transparent 55%),var(--bg);
+  border:1px solid var(--line); overflow:hidden;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:clamp(16px,4vw,34px);
+}
+.hit{font-family:var(--hit);}
+.dot{color:var(--red);}
+.wm{font-family:var(--hit);font-weight:800;letter-spacing:.5px;}
+.kick{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:radial-gradient(120% 120% at 15% 110%,rgba(60,70,90,.20),transparent 55%);}

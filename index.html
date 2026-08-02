@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Widgets</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  body{display:block;overflow:auto;background:var(--bg);}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 22px 80px;}
+  header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:34px;}
+  header .wm{font-size:34px;}
+  header .kick{font-size:12px;letter-spacing:3px;margin-top:12px;display:block;}
+  header p{color:var(--muted);margin-top:12px;max-width:560px;line-height:1.6;font-size:14px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+  .w{background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;}
+  .w .prev{height:180px;background:#000;border-bottom:1px solid var(--line);}
+  .w .prev iframe{width:100%;height:100%;border:0;display:block;}
+  .w .body{padding:16px 18px 18px;}
+  .w h3{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:15px;}
+  .w p{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:6px;}
+  .u{display:flex;gap:8px;margin-top:14px;}
+  .u input{flex:1;background:#000;border:1px solid var(--line);border-radius:8px;color:#cfcfd4;font-size:11px;padding:8px 10px;font-family:var(--sans);}
+  .u button{background:var(--red);color:#fff;border:0;border-radius:8px;font-size:12px;font-weight:600;padding:0 14px;cursor:pointer;font-family:var(--sans);}
+  .note{margin-top:40px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:12px;padding:20px 22px;}
+  .note h4{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:13px;margin-bottom:10px;}
+  .note ol{margin-left:18px;color:#cfcfd4;font-size:13px;line-height:1.9;}
+  .note code{background:#000;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12px;color:#ff7a84;}
+  footer{margin-top:40px;color:#6a6a72;font-size:11.5px;}
+</style></head>
+<body><div class="wrap">
+  <header>
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <span class="kick">Widgets · Notion embed</span>
+    <p>Widget brandizzati pronti da incorporare nelle pagine Notion. Copia l'URL, in Notion digita <code>/embed</code> e incolla.</p>
+  </header>
+  <div class="grid" id="grid"></div>
+  <div class="note">
+    <h4>Come si usa in Notion</h4>
+    <ol>
+      <li>Copia l'URL del widget (bottone <b>Copia</b>).</li>
+      <li>In Notion, nella pagina, digita <code>/embed</code> → <b>Incorpora</b>.</li>
+      <li>Incolla l'URL e premi <b>Incorpora link</b>.</li>
+      <li>Trascina i bordi per regolare la dimensione.</li>
+    </ol>
+  </div>
+  <footer>BlackBox — Oltre l'inquadratura. · info@blackboxeu.com</footer>
+</div>
+<script>
+const W=[
+  {f:'clock.html',    t:'Orologio + Data',   d:'Ora e data live (Como/Ticino), aggiornamento al secondo.'},
+  {f:'countdown.html',t:'Countdown',         d:'Conto alla rovescia verso una data. Personalizza con ?to=2026-12-31&label=Lancio'},
+  {f:'kpi.html',      t:'Cruscotto KPI',     d:'Progresso anno, target MRR e progetti attivi. Numeri nel file.'},
+  {f:'payoff.html',   t:'Payoff rotante',    d:'Header brand che alterna i payoff. Bello in cima alle pagine.'}
+];
+const grid=document.getElementById('grid');
+W.forEach(w=>{
+  const url=new URL(w.f,location.href).href;
+  const el=document.createElement('div');el.className='w';
+  el.innerHTML=`<div class="prev"><iframe src="${w.f}" loading="lazy"></iframe></div>
+    <div class="body"><h3>${w.t}</h3><p>${w.d}</p>
+    <div class="u"><input value="${url}" readonly><button>Copia</button></div></div>`;
+  el.querySelector('button').onclick=()=>{navigator.clipboard.writeText(url);const b=el.querySelector('button');b.textContent='✓';setTimeout(()=>b.textContent='Copia',1200);};
+  grid.appendChild(el);
+});
+</script></body></html>

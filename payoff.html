@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Payoff</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:center;text-align:center;justify-content:center;
+    background:radial-gradient(90% 130% at 50% -10%,rgba(225,29,42,.18),transparent 60%),var(--bg);}
+  .wm{font-size:clamp(22px,6vw,46px);letter-spacing:1px;}
+  .line{height:clamp(20px,4vw,34px);margin-top:14px;position:relative;width:100%;}
+  .line span{position:absolute;left:0;right:0;font-family:var(--hit);font-weight:700;
+    text-transform:uppercase;letter-spacing:2px;font-size:clamp(11px,2.6vw,17px);color:#cfcfd4;
+    opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s;}
+  .line span.on{opacity:1;transform:none;}
+  .line span em{color:var(--red);font-style:normal;}
+  .bar{width:50px;height:3px;background:var(--red);margin:18px auto 0;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="wm">BLACKBOX<span class="dot">.</span></div>
+  <div class="line" id="line"></div>
+  <div class="bar"></div>
+</div>
+<script>
+const P=[
+  "Oltre l'inquadratura.",
+  "Beyond the frame.",
+  "Video · Foto · Social · Web",
+  "Como · Milano · <em>Ticino</em>",
+  "Una casa di produzione a 360°."
+];
+const el=document.getElementById('line');
+P.forEach((t,i)=>{const s=document.createElement('span');s.innerHTML=t;if(i===0)s.classList.add('on');el.appendChild(s);});
+let i=0;const spans=el.querySelectorAll('span');
+setInterval(()=>{spans[i].classList.remove('on');i=(i+1)%spans.length;spans[i].classList.add('on');},3200);
+</script></body></html>

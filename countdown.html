@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Countdown</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .card{align-items:flex-start;}
+  .kick{font-size:clamp(9px,1.8vw,12px);}
+  .lab{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:clamp(18px,5vw,34px);line-height:1;margin-top:8px;}
+  .grid{display:flex;gap:clamp(8px,2vw,18px);margin-top:auto;width:100%;}
+  .cell{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:clamp(8px,2vw,16px);text-align:center;}
+  .cell .n{font-family:var(--hit);font-weight:800;font-size:clamp(26px,8vw,58px);line-height:1;}
+  .cell .u{font-size:clamp(8px,1.6vw,11px);color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:6px;}
+  .cell:first-child .n{color:var(--red);}
+  .when{font-size:clamp(10px,2.2vw,13px);color:#cfcfd4;margin-top:14px;}
+  .done{font-family:var(--hit);font-weight:800;color:var(--red);font-size:clamp(20px,6vw,40px);margin-top:auto;text-transform:uppercase;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="kick" id="kick">Countdown</div>
+  <div class="lab" id="lab">—</div>
+  <div id="wrap">
+    <div class="grid">
+      <div class="cell"><div class="n" id="dd">--</div><div class="u">Giorni</div></div>
+      <div class="cell"><div class="n" id="hh">--</div><div class="u">Ore</div></div>
+      <div class="cell"><div class="n" id="mi">--</div><div class="u">Min</div></div>
+      <div class="cell"><div class="n" id="ss">--</div><div class="u">Sec</div></div>
+    </div>
+    <div class="when" id="when"></div>
+  </div>
+</div>
+<script>
+/* CONFIG: modifica qui, oppure passa da URL ?to=2026-12-31T18:00&label=Lancio+sito */
+const CFG={ to:'2026-12-31T23:59:59', label:'Fine 2026' };
+const q=new URLSearchParams(location.search);
+const TARGET=new Date(q.get('to')||CFG.to);
+const LABEL=q.get('label')||CFG.label;
+document.getElementById('lab').textContent=LABEL;
+const mesi=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+document.getElementById('when').textContent='→ '+TARGET.getDate()+' '+mesi[TARGET.getMonth()]+' '+TARGET.getFullYear();
+function p(n){return String(n).padStart(2,'0');}
+function tick(){
+  const diff=TARGET-new Date();
+  if(diff<=0){document.getElementById('wrap').innerHTML='<div class="done">È il momento 🔴</div>';return;}
+  const s=Math.floor(diff/1000);
+  document.getElementById('dd').textContent=Math.floor(s/86400);
+  document.getElementById('hh').textContent=p(Math.floor(s%86400/3600));
+  document.getElementById('mi').textContent=p(Math.floor(s%3600/60));
+  document.getElementById('ss').textContent=p(s%60);
+}
+tick();setInterval(tick,1000);
+</script></body></html>
