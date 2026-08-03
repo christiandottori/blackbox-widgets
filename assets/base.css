@@ -11,17 +11,19 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;}
+/* Il "gap" dietro gli angoli arrotondati assume il colore dello sfondo di Notion
+   in base al tema (chiaro/scuro), così gli angoli si fondono e sembra arrotondato
+   senza triangoli. --notionbg = colore pagina Notion per tema. */
+:root{ --notionbg:#ffffff; }
+@media (prefers-color-scheme: dark){ :root{ --notionbg:#191919; } }
 body{
   font-family:var(--sans); color:var(--ink);
-  background:var(--bg); -webkit-font-smoothing:antialiased;
+  background:var(--notionbg); -webkit-font-smoothing:antialiased;
   display:flex; align-items:stretch; justify-content:stretch;
   overflow:hidden;
 }
-/* NB: niente border-radius — negli embed Notion l'iframe ha angoli quadri
-   e uno sfondo (bianco in tema chiaro): con gli angoli arrotondati
-   comparivano triangoli bianchi. Il widget riempie tutto fino al bordo. */
 .card{
-  position:relative; flex:1; margin:0; border-radius:0;
+  position:relative; flex:1; margin:0; border-radius:16px;
   background:radial-gradient(120% 140% at 85% -20%,rgba(225,29,42,.14),transparent 55%),var(--bg);
   border:none; overflow:hidden;
   display:flex; flex-direction:column; justify-content:center;
