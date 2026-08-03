@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Azioni rapide</title>
+<link rel="stylesheet" href="assets/base.css?v=6">
+<style>
+  .card{align-items:stretch;justify-content:flex-start;padding:clamp(12px,4vw,18px);gap:12px;overflow:auto;}
+  .hd{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;
+    background:linear-gradient(100deg,rgba(225,29,42,.18),rgba(225,29,42,.03) 60%,transparent);}
+  .hd .ic{font-size:16px;}
+  .hd .t{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.3px;}
+  .list{display:flex;flex-direction:column;gap:8px;}
+  .act{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px;transition:background .15s,transform .15s,border-color .15s;}
+  .act:hover{background:var(--surface);border-color:var(--red);transform:translateX(2px);}
+  .act .i{width:28px;height:28px;flex-shrink:0;border-radius:8px;background:var(--surface2);
+    display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .act .l{font-size:13px;font-weight:500;}
+  .act .ar{margin-left:auto;color:var(--muted);font-size:13px;transition:color .15s,transform .15s;}
+  .act:hover .ar{color:var(--red);transform:translateX(2px);}
+  .foot{font-size:9.5px;color:var(--faint);text-align:center;margin-top:2px;}
+</style></head>
+<body><div class="card">
+  <div class="hd"><span class="ic">⚡</span><span class="t">Azioni rapide</span></div>
+  <div class="list" id="list"></div>
+  <div class="foot">BLACKBOX. · Oltre l'inquadratura</div>
+</div>
+<script>
+/* ==== AZIONI — modifica etichette/emoji/URL ==== */
+const ACTIONS = [
+  ["🎬","Nuovo progetto",   "https://app.notion.com/p/2442dc88219245da91c91a254df20b7d"],
+  ["📄","Nuovo preventivo", "https://app.notion.com/p/f7d7359f40c04027b8b069037265b257"],
+  ["👤","Nuova scheda cliente","https://app.notion.com/p/3b0c4ba2569280c69446cf1301a2f035"],
+  ["🗂️","Documenti",        "https://app.notion.com/p/3aec4ba2569281e480e3d48da097f776"],
+  ["✉️","Scrivi a info",    "mailto:info@blackboxeu.com"]
+];
+/* =============================================== */
+const list=document.getElementById('list');
+ACTIONS.forEach(([ic,label,url])=>{
+  const a=document.createElement('a');a.className='act';a.href=url;a.target='_blank';a.rel='noopener';
+  a.innerHTML='<span class="i">'+ic+'</span><span class="l">'+label+'</span><span class="ar">→</span>';
+  list.appendChild(a);
+});
+</script></body></html>
