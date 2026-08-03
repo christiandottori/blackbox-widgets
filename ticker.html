@@ -3,24 +3,25 @@
 <title>BlackBox · Ticker</title>
 <link rel="stylesheet" href="assets/base.css?v=4">
 <style>
-  .card{padding:0;overflow:hidden;justify-content:center;
+  .card{padding:0;overflow:hidden;position:relative;display:block;
     background:linear-gradient(90deg,#0a0a0b,#141418,#0a0a0b);}
-  .wm{position:absolute;left:0;top:0;bottom:0;display:flex;align-items:center;padding:0 18px;z-index:3;
+  .mq{position:absolute;inset:0;display:flex;align-items:center;overflow:hidden;}
+  .row{display:inline-flex;align-items:center;flex-shrink:0;white-space:nowrap;
+    padding-left:130px;will-change:transform;animation:marquee 30s linear infinite;}
+  .row .it{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+    font-size:clamp(12px,3vw,17px);color:#e8e8ec;display:inline-flex;align-items:center;}
+  .row .sep{color:var(--red);margin:0 26px;font-size:.8em;}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .card:hover .row{animation-play-state:paused;}
+  .wm{position:absolute;left:0;top:0;bottom:0;z-index:3;display:flex;align-items:center;padding:0 18px;
     background:var(--red);font-family:var(--hit);font-weight:800;font-size:clamp(12px,3vw,16px);color:#fff;letter-spacing:.5px;}
   .fade{position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;}
-  .fade.l{left:0;background:linear-gradient(90deg,#0a0a0b,transparent);}
   .fade.r{right:0;background:linear-gradient(270deg,#0a0a0b,transparent);}
-  .track{display:flex;width:max-content;white-space:nowrap;padding-left:12px;will-change:transform;animation:scroll 28s linear infinite;}
-  .track span{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-    font-size:clamp(12px,3vw,17px);color:#e8e8ec;padding:0 26px;display:inline-flex;align-items:center;}
-  .track b{color:var(--red);margin-left:26px;}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .card:hover .track{animation-play-state:paused;}
 </style></head>
 <body><div class="card">
+  <div class="mq"><div class="row" id="row"></div></div>
+  <div class="fade r"></div>
   <span class="wm">BLACKBOX<span style="color:#fff">.</span></span>
-  <div class="fade l"></div><div class="fade r"></div>
-  <div class="track" id="track"></div>
 </div>
 <script>
 /* ==== messaggi del ticker — modificabili ==== */
@@ -32,13 +33,7 @@ const MESSAGES = [
   "Prenota la tua consulenza gratuita"
 ];
 /* ============================================ */
-const track=document.getElementById('track');
-function build(){
-  let html='';
-  for(let r=0;r<2;r++){ // duplicato per loop continuo
-    MESSAGES.forEach(m=>{ html+='<span>'+m+'<b>●</b></span>'; });
-  }
-  track.innerHTML=html;
-}
-build();
+const row=document.getElementById('row');
+let unit=MESSAGES.map(m=>'<span class="it">'+m+'<span class="sep">●</span></span>').join('');
+row.innerHTML=unit+unit; // duplicato per loop continuo (-50%)
 </script></body></html>
