@@ -12,6 +12,12 @@
   .st .n{font-family:var(--hit);font-weight:800;font-size:clamp(28px,7vw,60px);line-height:1;}
   .st .n span{color:var(--red);}
   .st .l{font-size:clamp(9px,1.5vw,12px);color:var(--muted);margin-top:10px;letter-spacing:.5px;}
+/*VSTACK*/
+@media (max-width:360px){
+  .row{flex-direction:column;align-items:stretch;}
+  .row>*{flex:0 0 auto;width:100%;}
+  .st+.st::before{display:none}.st{padding:10px 0;border-top:1px solid var(--line)}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span></div>

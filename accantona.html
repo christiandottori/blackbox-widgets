@@ -19,6 +19,11 @@
   .set .v{color:var(--red);} .set{background:radial-gradient(120% 140% at 90% -20%,rgba(225,29,42,.2),transparent 55%),var(--bg2);}
   .box .s{font-size:11px;color:var(--muted);margin-top:6px;}
   .note{font-size:10px;color:var(--faint);margin-top:auto;padding-top:12px;}
+/*VSTACK*/
+@media (max-width:360px){
+  .row{flex-direction:column;align-items:stretch;}
+  .row>*{flex:0 0 auto;width:100%;}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head">

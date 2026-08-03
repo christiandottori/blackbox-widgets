@@ -18,6 +18,11 @@
   .box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:15px;}
   .box .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
   .box .v{font-family:var(--hit);font-weight:800;font-size:clamp(22px,5vw,34px);margin-top:7px;} .box .v span{color:var(--red);font-size:.5em;}
+/*VSTACK*/
+@media (max-width:360px){
+  .row{flex-direction:column;align-items:stretch;}
+  .row>*{flex:0 0 auto;width:100%;}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head">

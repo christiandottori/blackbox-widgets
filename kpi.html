@@ -21,6 +21,11 @@
   .ring::before{content:'';position:absolute;width:0;}
   .ring .inner{width:72%;height:72%;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;
     font-family:var(--hit);font-weight:800;font-size:clamp(13px,2.6vw,20px);}
+/*VSTACK*/
+@media (max-width:360px){
+  .row{flex-direction:column;align-items:stretch;}
+  .row>*{flex:0 0 auto;width:100%;}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick" id="kick">Cruscotto · 2026</span></div>

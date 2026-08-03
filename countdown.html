@@ -13,6 +13,11 @@
   .cell:first-child .n{color:var(--red);}
   .when{font-size:clamp(10px,2.2vw,13px);color:var(--ink2);margin-top:14px;}
   .done{font-family:var(--hit);font-weight:800;color:var(--red);font-size:clamp(20px,6vw,40px);margin-top:auto;text-transform:uppercase;}
+/*VSTACK*/
+@media (max-width:360px){
+  .grid{flex-direction:column;align-items:stretch;}
+  .grid>*{flex:0 0 auto;width:100%;}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="kick" id="kick">Countdown</div>

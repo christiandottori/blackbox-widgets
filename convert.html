@@ -18,6 +18,11 @@
   .res .big{font-family:var(--hit);font-weight:800;font-size:clamp(26px,6vw,46px);line-height:1;margin-top:8px;}
   .res .big span{color:var(--red);font-size:.5em;}
   .rate{font-size:11px;color:var(--muted);margin-top:auto;padding-top:14px;}
+/*VSTACK*/
+@media (max-width:360px){
+  .res{flex-direction:column;align-items:stretch;}
+  .res>*{flex:0 0 auto;width:100%;}
+}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick" id="dir">EUR → CHF</span></div>
