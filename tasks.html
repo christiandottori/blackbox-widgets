@@ -7,20 +7,17 @@
   .top{display:flex;align-items:center;justify-content:space-between;}
   .top .wm{font-family:var(--hit);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;}
   .top .wm .dot{color:var(--red);}
-  .rst{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:14px;transition:.15s;}
-  .rst:hover{border-color:var(--red);color:var(--red);}
-  /* tabs stile game */
+  .top .cnt{font-family:var(--hit);font-weight:700;font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
   .tabs{display:flex;gap:8px;}
   .tab{flex:1;position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;
     padding:10px;cursor:pointer;font-family:var(--hit);font-weight:800;text-transform:uppercase;
     letter-spacing:1px;font-size:12px;color:var(--muted);transition:.18s;overflow:hidden;}
   .tab .who{display:block;font-size:13px;}
-  .tab .cnt{display:block;font-family:var(--sans);font-weight:600;font-size:9.5px;letter-spacing:.5px;margin-top:3px;opacity:.8;}
+  .tab .n{display:block;font-family:var(--sans);font-weight:600;font-size:9.5px;letter-spacing:.5px;margin-top:3px;opacity:.8;}
   .tab.on{color:var(--ink);border-color:var(--red);
     background:linear-gradient(180deg,rgba(225,29,42,.16),transparent),var(--surface);
     box-shadow:0 0 0 1px var(--red) inset,0 6px 20px rgba(225,29,42,.20);}
   .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red);box-shadow:0 0 10px var(--red);}
-  /* lista */
   .list{display:flex;flex-direction:column;gap:7px;}
   .task{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-left:2px solid var(--line);
     border-radius:9px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s,transform .15s;background:var(--surface);}
@@ -28,82 +25,77 @@
   .box{width:20px;height:20px;flex-shrink:0;border:2px solid var(--muted);border-radius:5px;display:flex;
     align-items:center;justify-content:center;color:transparent;font-size:12px;font-weight:900;transition:.15s;}
   .task:hover .box{border-color:var(--red);}
-  .lbl{font-size:13px;line-height:1.3;}
+  .lbl{font-size:13px;line-height:1.3;flex:1;}
   .lbl .cv{color:var(--red);font-family:var(--hit);font-weight:800;margin-right:6px;}
-  /* completamento: bagliore rosso poi sparizione */
-  .task.done{pointer-events:none;animation:done .62s cubic-bezier(.4,0,.2,1) forwards;}
+  .task.done{pointer-events:none;animation:done .58s cubic-bezier(.4,0,.2,1) forwards;}
   .task.done .box{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 14px var(--red);}
   @keyframes done{
-    0%{}
-    22%{box-shadow:0 0 0 1px var(--red) inset,0 0 26px rgba(225,29,42,.75);border-color:var(--red);background:rgba(225,29,42,.16);transform:none;}
+    22%{box-shadow:0 0 0 1px var(--red) inset,0 0 26px rgba(225,29,42,.75);border-color:var(--red);background:rgba(225,29,42,.16);}
     55%{opacity:1;}
     100%{opacity:0;transform:translateX(38px) scale(.94);height:0;padding-top:0;padding-bottom:0;margin:0;border-width:0;}
   }
-  .empty{text-align:center;color:var(--muted);font-size:12.5px;padding:22px 0;line-height:1.7;}
-  .empty .big{font-family:var(--hit);font-weight:800;color:var(--red);font-size:16px;display:block;margin-bottom:4px;}
-  .foot{font-size:10px;color:var(--faint);font-family:var(--hit);letter-spacing:1px;text-transform:uppercase;}
+  /* aggiungi */
+  .add{display:flex;gap:8px;align-items:center;margin-top:2px;}
+  .add input{flex:1;background:var(--field);border:1px solid var(--line);border-radius:9px;color:var(--ink);
+    font-family:var(--sans);font-size:13px;padding:10px 12px;outline:none;transition:.15s;}
+  .add input:focus{border-color:var(--red);}
+  .add button{flex-shrink:0;width:38px;height:38px;border:none;border-radius:9px;background:var(--red);color:#fff;
+    font-size:20px;font-weight:700;cursor:pointer;line-height:1;transition:.15s;box-shadow:0 4px 14px rgba(225,29,42,.3);}
+  .add button:active{transform:scale(.92);}
+  .empty{text-align:center;color:var(--muted);font-size:12px;padding:14px 0;}
 </style></head>
 <body><div class="card">
-  <div class="top"><span class="wm">Task<span class="dot">.</span></span><button class="rst" id="rst" title="Ripristina completate">↺</button></div>
+  <div class="top"><span class="wm">Task<span class="dot">.</span></span><span class="cnt" id="cnt"></span></div>
   <div class="tabs" id="tabs"></div>
   <div class="list" id="list"></div>
-  <div class="foot" id="foot"></div>
+  <div class="add">
+    <input id="inp" type="text" placeholder="Nuova task…" maxlength="80">
+    <button id="addBtn" title="Aggiungi">+</button>
+  </div>
 </div>
 <script>
-/* ==== TASK — modifica liberamente ==== */
-const PEOPLE = [
-  {key:"chris", name:"Chris", tasks:[
-    "Case study Montanstahl",
-    "Montaggio reel Nebel",
-    "Preventivo nuovo cliente",
-    "Color grading spot",
-    "Rispondere a MySecretCase"
-  ]},
-  {key:"nico", name:"Nico", tasks:[
-    "Aggiornare sito cliente",
-    "Setup dominio & DNS",
-    "Piano editoriale settimana",
-    "Backup progetti",
-    "Fattura fornitore"
-  ]}
-];
-/* ===================================== */
-const KEY="bb-tasks-done-v1";
-const done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
-const save=()=>localStorage.setItem(KEY,JSON.stringify([...done]));
-let cur=PEOPLE[0].key;
-const id=(p,t)=>p+"::"+t;
-const remaining=p=>p.tasks.filter(t=>!done.has(id(p.key,t)));
+/* ==== persone + task iniziali (solo al primo avvio) ==== */
+const NAMES={chris:"Chris", nico:"Nico"};
+const DEFAULTS={
+  chris:["Case study Montanstahl","Montaggio reel Nebel","Preventivo nuovo cliente"],
+  nico:["Aggiornare sito cliente","Setup dominio & DNS","Piano editoriale settimana"]
+};
+/* ====================================================== */
+const KEY="bb-tasks-v2";
+let store=JSON.parse(localStorage.getItem(KEY)||"null");
+if(!store){ store=JSON.parse(JSON.stringify(DEFAULTS)); localStorage.setItem(KEY,JSON.stringify(store)); }
+const save=()=>localStorage.setItem(KEY,JSON.stringify(store));
+let cur="chris";
 
 function tabs(){
   const c=document.getElementById('tabs');c.innerHTML='';
-  PEOPLE.forEach(p=>{
-    const b=document.createElement('div');b.className='tab'+(p.key===cur?' on':'');
-    b.innerHTML='<span class="who">'+p.name+'</span><span class="cnt">'+remaining(p).length+' missioni</span>';
-    b.onclick=()=>{cur=p.key;render();};
+  Object.keys(NAMES).forEach(k=>{
+    const b=document.createElement('div');b.className='tab'+(k===cur?' on':'');
+    b.innerHTML='<span class="who">'+NAMES[k]+'</span><span class="n">'+store[k].length+' task</span>';
+    b.onclick=()=>{cur=k;render();};
     c.appendChild(b);
   });
 }
 function render(){
   tabs();
-  const p=PEOPLE.find(x=>x.key===cur);
   const list=document.getElementById('list');list.innerHTML='';
-  const rem=remaining(p);
-  if(!rem.length){ list.innerHTML='<div class="empty"><span class="big">MISSIONI COMPLETE</span>Nessuna task per '+p.name+'. 🔴</div>'; }
-  rem.forEach(t=>{
+  if(!store[cur].length){ list.innerHTML='<div class="empty">Nessuna task. Aggiungine una qui sotto ↓</div>'; }
+  store[cur].forEach((t,idx)=>{
     const el=document.createElement('div');el.className='task';
-    el.innerHTML='<div class="box">✓</div><div class="lbl"><span class="cv">›</span>'+t+'</div>';
+    el.innerHTML='<div class="box">✓</div><div class="lbl"><span class="cv">›</span>'+t.replace(/</g,'&lt;')+'</div>';
     el.onclick=()=>{
       el.classList.add('done');
-      el.addEventListener('animationend',()=>{ done.add(id(p.key,t)); save(); render(); },{once:true});
+      el.addEventListener('animationend',()=>{ store[cur].splice(idx,1); save(); render(); },{once:true});
     };
     list.appendChild(el);
   });
-  document.getElementById('foot').textContent=rem.length? rem.length+' missioni rimaste · '+p.name : '';
+  document.getElementById('cnt').textContent=store[cur].length+' da fare';
 }
-document.getElementById('rst').onclick=()=>{
-  const p=PEOPLE.find(x=>x.key===cur);
-  p.tasks.forEach(t=>done.delete(id(p.key,t)));save();render();
-};
+function addTask(){
+  const inp=document.getElementById('inp');const v=inp.value.trim();
+  if(!v)return; store[cur].push(v); save(); inp.value=''; render(); inp.focus();
+}
+document.getElementById('addBtn').onclick=addTask;
+document.getElementById('inp').addEventListener('keydown',e=>{ if(e.key==='Enter')addTask(); });
 render();
 </script></body></html>
