@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Cash flow / Runway</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;gap:8px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;padding:6px 12px;border-radius:100px;cursor:pointer;}
+  .toggle button.on{background:var(--red);color:#fff;}
+  .ins{display:flex;gap:10px;width:100%;flex-wrap:wrap;}
+  .fld{flex:1;min-width:120px;}
+  .fld label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
+  .fld input{width:100%;background:#000;border:1px solid var(--line);border-radius:10px;color:#fff;font-family:var(--hit);font-weight:700;font-size:clamp(16px,3.2vw,22px);padding:10px 12px;}
+  .res{width:100%;margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .res .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .res .big{font-family:var(--hit);font-weight:800;font-size:clamp(30px,8vw,60px);line-height:1;}
+  .res .big span{color:var(--red);font-size:.4em;}
+  .res .s{font-size:12px;color:#9a9aa2;margin-top:6px;}
+  .burn{font-size:12px;color:#cfcfd4;margin-top:12px;}
+  .burn b{font-family:var(--hit);}
+  .ok{color:#4ade80;} .warn{color:var(--red);}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head">
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <div class="toggle"><button id="cE" class="on">€</button><button id="cC">CHF</button></div>
+  </div>
+  <div class="ins">
+    <div class="fld"><label>Cassa attuale</label><input id="cassa" type="number" value="15000" min="0"></div>
+    <div class="fld"><label>Costi fissi / mese</label><input id="costi" type="number" value="3500" min="0"></div>
+    <div class="fld"><label>Entrate / mese (media)</label><input id="entrate" type="number" value="2500" min="0"></div>
+  </div>
+  <div class="res">
+    <div><div class="l">Autonomia</div><div class="s" id="fino"></div></div>
+    <div class="big" id="run">—</div>
+  </div>
+  <div class="burn" id="burn"></div>
+</div>
+<script>
+let cur='€';
+const fmt=n=>cur+' '+Math.round(n).toLocaleString('it-IT');
+const mesiN=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+function calc(){
+  const cassa=parseFloat(document.getElementById('cassa').value)||0;
+  const costi=parseFloat(document.getElementById('costi').value)||0;
+  const entr=parseFloat(document.getElementById('entrate').value)||0;
+  const burn=costi-entr; // netto mensile in uscita
+  const run=document.getElementById('run');
+  if(burn<=0){
+    run.innerHTML='∞';
+    document.getElementById('fino').textContent='sei in positivo';
+    document.getElementById('burn').innerHTML='<span class="ok">Flusso positivo: +'+fmt(-burn)+'/mese</span>';
+    return;
+  }
+  const months=cassa/burn;
+  run.innerHTML=(Math.floor(months))+'<span> mesi</span>';
+  const d=new Date(); d.setMonth(d.getMonth()+Math.floor(months));
+  document.getElementById('fino').textContent='fino a ~'+mesiN[d.getMonth()]+' '+d.getFullYear();
+  document.getElementById('burn').innerHTML='Burn netto: <b class="warn">-'+fmt(burn)+'/mese</b>';
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
+document.getElementById('cE').onclick=()=>{cur='€';document.getElementById('cE').classList.add('on');document.getElementById('cC').classList.remove('on');calc();};
+document.getElementById('cC').onclick=()=>{cur='CHF';document.getElementById('cC').classList.add('on');document.getElementById('cE').classList.remove('on');calc();};
+calc();
+</script></body></html>

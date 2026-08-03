@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Margine progetto</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:12px;gap:8px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;padding:6px 12px;border-radius:100px;cursor:pointer;}
+  .toggle button.on{background:var(--red);color:#fff;}
+  .grid{display:flex;gap:14px;width:100%;}
+  .col{flex:1;}
+  .lab{font-family:var(--hit);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);}
+  .row .l{font-size:12px;color:#cfcfd4;}
+  .row input{width:82px;background:#000;border:1px solid var(--line);border-radius:7px;color:#fff;padding:6px 8px;font-family:var(--sans);text-align:right;}
+  .price input{color:#fff;font-family:var(--hit);font-weight:700;}
+  .res{width:100%;margin-top:14px;display:flex;gap:12px;}
+  .box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:14px 16px;}
+  .box .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .box .v{font-family:var(--hit);font-weight:800;font-size:clamp(22px,5vw,34px);margin-top:6px;}
+  .track{height:8px;background:#26262c;border-radius:100px;margin-top:12px;overflow:hidden;}
+  .fill{height:100%;background:linear-gradient(90deg,var(--red),#ff5763);width:0;transition:width .5s;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head">
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <div class="toggle"><button id="cE" class="on">€</button><button id="cC">CHF</button></div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <div class="lab">Ricavo</div>
+      <div class="row price"><span class="l">Prezzo cliente</span><input id="prezzo" type="number" value="4000" min="0"></div>
+    </div>
+    <div class="col">
+      <div class="lab">Costi</div>
+      <div class="row"><span class="l">Troupe / freelance</span><input class="cost" type="number" value="1200" min="0"></div>
+      <div class="row"><span class="l">Noleggi attrezzatura</span><input class="cost" type="number" value="500" min="0"></div>
+      <div class="row"><span class="l">Trasferte / vitto</span><input class="cost" type="number" value="300" min="0"></div>
+      <div class="row"><span class="l">Altro</span><input class="cost" type="number" value="0" min="0"></div>
+    </div>
+  </div>
+  <div class="res">
+    <div class="box"><div class="t">Utile</div><div class="v" id="utile">—</div></div>
+    <div class="box"><div class="t">Margine</div><div class="v" id="marg">—</div><div class="track"><div class="fill" id="fill"></div></div></div>
+  </div>
+</div>
+<script>
+let cur='€';
+const fmt=n=>cur+' '+Math.round(n).toLocaleString('it-IT');
+function calc(){
+  const p=parseFloat(document.getElementById('prezzo').value)||0;
+  let c=0; document.querySelectorAll('.cost').forEach(i=>c+=parseFloat(i.value)||0);
+  const u=p-c; const m=p?u/p*100:0;
+  document.getElementById('utile').innerHTML=fmt(u);
+  document.getElementById('marg').textContent=Math.round(m)+'%';
+  document.getElementById('fill').style.width=Math.max(0,Math.min(100,m))+'%';
+  document.getElementById('utile').style.color = u<0 ? 'var(--red)' : '#fff';
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
+document.getElementById('cE').onclick=()=>{cur='€';document.getElementById('cE').classList.add('on');document.getElementById('cC').classList.remove('on');calc();};
+document.getElementById('cC').onclick=()=>{cur='CHF';document.getElementById('cC').classList.add('on');document.getElementById('cE').classList.remove('on');calc();};
+calc();
+</script></body></html>

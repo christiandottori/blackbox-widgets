@@ -53,11 +53,17 @@ const W=[
   {f:'payoff.html',   t:'Payoff rotante',    d:'Header brand che alterna i payoff.'},
   {f:'storage.html',  t:'Storage & Timecode',d:'GB per minuti (ProRes/BRAW/H.264) + durata↔frame. Da set.'},
   {f:'convert.html',  t:'EUR ⇄ CHF',         d:'Convertitore valuta con cambio live (utile per il Ticino).'},
-  {f:'preventivo.html',t:'Preventivo lampo', d:'Stima rapida: giornate riprese + montaggio + extra.'},
+  {f:'preventivo.html',t:'Preventivo a ore',  d:'Stima a ore con tariffe IT (€) / CH (CHF), toggle paese.'},
   {f:'timer.html',    t:'Focus Timer',       d:'Pomodoro brandizzato per le sessioni di montaggio.'},
   {f:'brand.html',    t:'Brand Kit',         d:'Swatch colori (clic per copiare hex) + font di riferimento.'},
   {f:'kpi-live.html', t:'KPI live (Notion)', d:'Pipeline, progetti attivi e consegnati DAL VIVO dal DB Progetti & clienti.'},
-  {f:'deadlines.html',t:'Prossime consegne', d:'Scadenze reali dal Notion con countdown. Sincronizzate ogni 30 min.'}
+  {f:'deadlines.html',t:'Prossime consegne', d:'Scadenze reali dal Notion con countdown. Sincronizzate ogni 30 min.'},
+  {f:'netto.html',    t:'Netto forfettario', d:'Da fatturato a netto: INPS + imposta sostitutiva (IT).'},
+  {f:'accantona.html',t:'Accantona-tasse',   d:'Quanto mettere da parte per ogni incasso (forfettario IT).'},
+  {f:'acconto.html',  t:'Acconto / Saldo',   d:'50/50 + IVA (IT 22% · CH 8.1% · no IVA).'},
+  {f:'margine.html',  t:'Margine progetto',  d:'Prezzo − costi → utile e margine %. €/CHF.'},
+  {f:'obiettivo.html',t:'Obiettivo fatturato',d:'Dal netto desiderato: lordo/anno, /mese, nº progetti.'},
+  {f:'cashflow.html', t:'Cash flow / Runway',d:'Cassa ÷ burn → mesi di autonomia. €/CHF.'}
 ];
 const grid=document.getElementById('grid');
 W.forEach(w=>{

@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Obiettivo fatturato</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;gap:8px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;padding:6px 12px;border-radius:100px;cursor:pointer;}
+  .toggle button.on{background:var(--red);color:#fff;}
+  .ins{display:flex;gap:10px;width:100%;}
+  .fld{flex:1;}
+  .fld label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
+  .fld input{width:100%;background:#000;border:1px solid var(--line);border-radius:10px;color:#fff;font-family:var(--hit);font-weight:800;font-size:clamp(18px,3.6vw,26px);padding:11px 13px;}
+  .row{display:flex;gap:10px;width:100%;margin-top:14px;}
+  .box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px 15px;}
+  .box.hl{background:radial-gradient(120% 140% at 90% -20%,rgba(225,29,42,.18),transparent 55%),var(--bg2);}
+  .box .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .box .v{font-family:var(--hit);font-weight:800;font-size:clamp(20px,4.5vw,30px);margin-top:6px;} .box .v span{color:var(--red);font-size:.5em;}
+  .box .s{font-size:11px;color:#9a9aa2;margin-top:4px;}
+  .note{font-size:10px;color:#6a6a72;margin-top:12px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head">
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <div class="toggle"><button id="a5" class="on">5%</button><button id="a15">15%</button></div>
+  </div>
+  <div class="ins">
+    <div class="fld"><label>Netto annuo desiderato (€)</label><input id="net" type="number" value="30000" min="0"></div>
+    <div class="fld"><label>Prezzo medio progetto (€)</label><input id="avg" type="number" value="3000" min="0"></div>
+  </div>
+  <div class="row">
+    <div class="box hl"><div class="t">Fatturato lordo/anno</div><div class="v" id="anno">—</div></div>
+    <div class="box"><div class="t">Al mese</div><div class="v" id="mese">—</div></div>
+  </div>
+  <div class="row">
+    <div class="box"><div class="t">Progetti / anno</div><div class="v" id="pa">—</div></div>
+    <div class="box"><div class="t">Progetti / mese</div><div class="v" id="pm">—</div><div class="s" id="pms"></div></div>
+  </div>
+  <div class="note">Reverse dal netto forfettario (coeff. 78% · INPS 26,07% · imposta <b id="al">5%</b>). Stima — verifica col commercialista.</div>
+</div>
+<script>
+const COEFF=0.78, INPS=0.2607; let ALIQ=0.05;
+const eur=n=>'€'+Math.round(n).toLocaleString('it-IT');
+function netFactor(){ const inps=COEFF*INPS; const imposta=ALIQ*(COEFF-COEFF*INPS); return 1-(inps+imposta); }
+function calc(){
+  const net=parseFloat(document.getElementById('net').value)||0;
+  const avg=parseFloat(document.getElementById('avg').value)||0;
+  const lordo=net/netFactor();
+  document.getElementById('anno').innerHTML=eur(lordo);
+  document.getElementById('mese').innerHTML=eur(lordo/12);
+  const pa=avg?lordo/avg:0, pm=pa/12;
+  document.getElementById('pa').textContent=avg?Math.ceil(pa):'—';
+  document.getElementById('pm').textContent=avg?(Math.round(pm*10)/10):'—';
+  document.getElementById('pms').textContent=avg?('~1 ogni '+Math.round(30/(pm||1))+' giorni'):'';
+}
+document.getElementById('net').addEventListener('input',calc);
+document.getElementById('avg').addEventListener('input',calc);
+document.getElementById('a5').onclick=()=>{ALIQ=0.05;sw('a5','a15','5%');};
+document.getElementById('a15').onclick=()=>{ALIQ=0.15;sw('a15','a5','15%');};
+function sw(on,off,l){document.getElementById(on).classList.add('on');document.getElementById(off).classList.remove('on');document.getElementById('al').textContent=l;calc();}
+calc();
+</script></body></html>

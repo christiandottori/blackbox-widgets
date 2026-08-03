@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Netto forfettario</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;gap:10px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;letter-spacing:.5px;padding:6px 12px;border-radius:100px;cursor:pointer;}
+  .toggle button.on{background:var(--red);color:#fff;}
+  .fld{width:100%;margin-bottom:8px;}
+  .fld label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
+  .fld input{width:100%;background:#000;border:1px solid var(--line);border-radius:10px;color:#fff;font-family:var(--hit);font-weight:800;font-size:clamp(20px,4vw,28px);padding:11px 14px;}
+  .row{display:flex;gap:10px;width:100%;margin-top:12px;}
+  .box{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;}
+  .box .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .box .v{font-family:var(--hit);font-weight:800;font-size:clamp(17px,3.4vw,24px);margin-top:6px;}
+  .net{background:radial-gradient(120% 140% at 90% -20%,rgba(225,29,42,.18),transparent 55%),var(--bg2);}
+  .net .v{color:#fff;font-size:clamp(22px,5vw,34px);} .net .v span{color:var(--red);font-size:.55em;}
+  .note{font-size:10px;color:#6a6a72;margin-top:12px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head">
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <div class="toggle"><button id="a5" class="on">5% start-up</button><button id="a15">15%</button></div>
+  </div>
+  <div class="fld"><label>Fatturato annuo (€)</label><input id="fatt" type="number" value="30000" min="0"></div>
+  <div class="row">
+    <div class="box"><div class="t">Imponibile</div><div class="v" id="imp">—</div></div>
+    <div class="box"><div class="t">Contributi INPS</div><div class="v" id="inps">—</div></div>
+    <div class="box"><div class="t">Imposta sost.</div><div class="v" id="tax">—</div></div>
+  </div>
+  <div class="row">
+    <div class="box net"><div class="t">Netto in tasca</div><div class="v" id="net">—</div></div>
+    <div class="box"><div class="t">% netto</div><div class="v" id="pct">—</div></div>
+  </div>
+  <div class="note">Regime forfettario IT. Coeff. redditività <b>78%</b>, INPS gestione separata <b>26,07%</b>, imposta <b id="al">5%</b>. Stima — <b>verifica col commercialista</b>.</div>
+</div>
+<script>
+/* ==== parametri modificabili ==== */
+const COEFF=0.78, INPS=0.2607; let ALIQ=0.05;
+/* ================================ */
+const eur=n=>'€'+Math.round(n).toLocaleString('it-IT');
+function calc(){
+  const f=parseFloat(document.getElementById('fatt').value)||0;
+  const imp=f*COEFF; const inps=imp*INPS; const base=Math.max(0,imp-inps); const tax=base*ALIQ;
+  const net=f-inps-tax;
+  document.getElementById('imp').textContent=eur(imp);
+  document.getElementById('inps').textContent=eur(inps);
+  document.getElementById('tax').textContent=eur(tax);
+  document.getElementById('net').innerHTML=eur(net);
+  document.getElementById('pct').textContent=f?Math.round(net/f*100)+'%':'—';
+}
+document.getElementById('fatt').addEventListener('input',calc);
+document.getElementById('a5').onclick=()=>{ALIQ=0.05;set('a5','a15','5%');};
+document.getElementById('a15').onclick=()=>{ALIQ=0.15;set('a15','a5','15%');};
+function set(on,off,lab){document.getElementById(on).classList.add('on');document.getElementById(off).classList.remove('on');document.getElementById('al').textContent=lab;calc();}
+calc();
+</script></body></html>
