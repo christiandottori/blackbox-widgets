@@ -1,10 +1,16 @@
 {
-  "updatedAt": null,
-  "pipelineValue": 0,
-  "activeCount": 0,
+  "updatedAt": "2026-08-03T00:39:41.044Z",
+  "pipelineValue": 2500,
+  "activeCount": 2,
   "wonValue": 0,
   "wonCount": 0,
-  "leadCount": 0,
-  "totalCount": 0,
-  "byStato": { "Lead": 0, "In corso": 0, "In consegna": 0, "Consegnato": 0, "Perso": 0 }
+  "leadCount": 1,
+  "totalCount": 2,
+  "byStato": {
+    "Lead": 1,
+    "In corso": 1,
+    "In consegna": 0,
+    "Consegnato": 0,
+    "Perso": 0
+  }
 }

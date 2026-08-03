@@ -1,5 +1,14 @@
 {
-  "updatedAt": null,
-  "items": [],
+  "updatedAt": "2026-08-03T00:39:41.044Z",
+  "items": [
+    {
+      "progetto": "Contenuti social",
+      "cliente": "Nebel Productions",
+      "date": "2026-08-29",
+      "stato": "In corso",
+      "priorita": "Media",
+      "valore": 500
+    }
+  ],
   "overdue": []
 }
