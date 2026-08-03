@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Showreel</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{padding:0;overflow:hidden;align-items:stretch;justify-content:stretch;}
+  .frame{position:relative;flex:1;width:100%;background:#000;}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(60% 60% at 50% 40%,rgba(225,29,42,.18),transparent 60%),#0a0a0b;text-align:center;padding:20px;}
+  .ph .play{width:74px;height:74px;border-radius:50%;background:rgba(225,29,42,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 16px 50px rgba(225,29,42,.4);}
+  .ph .play .tri{width:0;height:0;border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px;}
+  .ph .t{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:18px;margin-top:16px;}
+  .ph .s{font-size:12px;color:var(--muted);margin-top:6px;}
+  .tag{position:absolute;top:14px;left:16px;z-index:3;font-family:var(--hit);font-weight:800;font-size:13px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+  .tag .dot{color:var(--red);}
+</style></head>
+<body><div class="card">
+  <div class="frame" id="frame">
+    <div class="tag">BLACKBOX<span class="dot">.</span> · Showreel</div>
+  </div>
+</div>
+<script>
+/* ==== INCOLLA QUI L'URL EMBED DEL TUO SHOWREEL ====
+   YouTube:  https://www.youtube.com/embed/VIDEO_ID
+   Vimeo:    https://player.vimeo.com/video/VIDEO_ID
+   Lascia '' per il segnaposto. */
+const VIDEO = '';
+/* ================================================== */
+const f=document.getElementById('frame');
+if(VIDEO){
+  const i=document.createElement('iframe');
+  i.src=VIDEO; i.allow='autoplay; fullscreen; picture-in-picture'; i.allowFullscreen=true;
+  f.appendChild(i);
+}else{
+  const d=document.createElement('div'); d.className='ph';
+  d.innerHTML='<div class="play"><div class="tri"></div></div><div class="t">Il tuo showreel</div><div class="s">Incolla l\'URL embed in cima a <b>showreel.html</b> (YouTube/Vimeo)</div>';
+  f.appendChild(d);
+}
+</script></body></html>

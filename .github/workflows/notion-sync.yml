@@ -24,6 +24,7 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DB_PROGETTI: 2442dc88219245da91c91a254df20b7d
+          DB_PREVENTIVI: f7d7359f40c04027b8b069037265b257
         run: node scripts/fetch-notion.mjs
       - name: Commit se cambiato
         run: |

@@ -71,7 +71,34 @@ const upcoming = openWithDate.filter(r => r.consegna >= todayISO).sort((a,b)=>a.
 const overdue  = openWithDate.filter(r => r.consegna <  todayISO).sort((a,b)=>a.consegna.localeCompare(b.consegna)).map(fmt);
 const deadlines = { updatedAt: now.toISOString(), items: upcoming, overdue };
 
+// ---- FINANCE (Preventivi & Contratti) — opzionale, non blocca se manca accesso ----
+let finance = { updatedAt: now.toISOString(), incassiAttesi: 0, count: 0, meseValore: 0, meseLabel: '' };
+const DBP = process.env.DB_PREVENTIVI;
+const mesiIT = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+finance.meseLabel = mesiIT[now.getMonth()] + ' ' + now.getFullYear();
+if (DBP) {
+  try {
+    const prev = (await queryAll(DBP)).map(pg => {
+      const P = pg.properties;
+      return { stato: sel(P['Stato']), importo: num(P['Importo']), data: date(P['Data']) };
+    });
+    const OK = ['Accettato', 'Firmato'];
+    const ym = todayISO.slice(0, 7);
+    for (const p of prev) {
+      if (OK.includes(p.stato)) {
+        finance.incassiAttesi += p.importo; finance.count++;
+        if (p.data && p.data.slice(0, 7) === ym) finance.meseValore += p.importo;
+      }
+    }
+    console.log('Preventivi OK:', prev.length, '· attesi €' + finance.incassiAttesi);
+  } catch (e) {
+    console.error('Preventivi non letti (accesso?):', e.message);
+    finance = null;
+  }
+}
+
 mkdirSync('data', { recursive: true });
 writeFileSync('data/kpi.json', JSON.stringify(kpi, null, 2));
 writeFileSync('data/deadlines.json', JSON.stringify(deadlines, null, 2));
+if (finance) writeFileSync('data/finance.json', JSON.stringify(finance, null, 2));
 console.log('OK:', rows.length, 'progetti · pipeline €' + pipelineValue + ' · upcoming ' + upcoming.length);

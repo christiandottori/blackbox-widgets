@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Obiettivo del mese</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:auto;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .head .mese{font-family:var(--hit);font-weight:700;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;}
+  .val{font-family:var(--hit);font-weight:800;font-size:clamp(34px,9vw,64px);line-height:1;}
+  .val span{color:var(--muted);font-size:.4em;font-weight:700;}
+  .track{width:100%;height:14px;background:#26262c;border-radius:100px;margin-top:16px;overflow:hidden;}
+  .fill{height:100%;background:linear-gradient(90deg,var(--red),#ff5763);width:0;border-radius:100px;transition:width 1s cubic-bezier(.2,.7,.2,1);}
+  .row{display:flex;justify-content:space-between;width:100%;margin-top:10px;font-size:12px;color:#9a9aa2;}
+  .row b{font-family:var(--hit);color:#fff;}
+  .wait{width:100%;text-align:center;color:var(--muted);font-size:12px;margin:auto 0;line-height:1.6;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="mese" id="mese">Obiettivo del mese</span></div>
+  <div id="body" style="width:100%"><div class="wait">Recupero i dati…</div></div>
+</div>
+<script>
+/* ==== obiettivo mensile (€) — modificabile ==== */
+const TARGET = 4000;
+/* ============================================== */
+const eur=n=>'€'+Math.round(n||0).toLocaleString('it-IT');
+async function load(){
+  const body=document.getElementById('body');
+  try{
+    const d=await (await fetch('data/finance.json?t='+Date.now())).json();
+    if(d.meseLabel) document.getElementById('mese').textContent=d.meseLabel;
+    if(!d.updatedAt){body.innerHTML='<div class="wait">In attesa della prima sincronizzazione.</div>';return;}
+    const v=d.meseValore||0; const pct=TARGET?Math.min(100,Math.round(v/TARGET*100)):0;
+    body.innerHTML='<div class="val">'+eur(v)+' <span>/ '+eur(TARGET)+'</span></div>'+
+      '<div class="track"><div class="fill" id="f"></div></div>'+
+      '<div class="row"><span>'+pct+'% dell’obiettivo</span><span>Mancano <b>'+eur(Math.max(0,TARGET-v))+'</b></span></div>';
+    setTimeout(()=>{document.getElementById('f').style.width=pct+'%';},120);
+  }catch(e){body.innerHTML='<div class="wait">Dati non disponibili.</div>';}
+}
+load();setInterval(load,120000);
+</script></body></html>

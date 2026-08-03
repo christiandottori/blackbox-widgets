@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Meteo riprese</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:12px;gap:8px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;padding:6px 11px;border-radius:100px;cursor:pointer;}
+  .toggle button.on{background:var(--red);color:#fff;}
+  .now{display:flex;align-items:center;gap:18px;width:100%;}
+  .now .temp{font-family:var(--hit);font-weight:800;font-size:clamp(40px,11vw,68px);line-height:1;}
+  .now .ico{font-size:clamp(34px,9vw,56px);}
+  .now .desc{font-size:13px;color:#cfcfd4;}
+  .metrics{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end;}
+  .m{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;text-align:center;min-width:66px;}
+  .m .k{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .m .v{font-family:var(--hit);font-weight:700;font-size:15px;margin-top:3px;}
+  .golden{display:flex;gap:10px;width:100%;margin-top:14px;}
+  .g{flex:1;background:radial-gradient(120% 140% at 90% -20%,rgba(225,29,42,.14),transparent 60%),var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .g .k{font-family:var(--hit);font-weight:700;font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase;}
+  .g .v{font-family:var(--hit);font-weight:800;font-size:clamp(15px,3.4vw,20px);margin-top:5px;}
+  .g .s{font-size:10.5px;color:#9a9aa2;margin-top:3px;}
+  .cond{width:100%;margin-top:12px;border-left:3px solid var(--red);background:var(--bg2);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#e8e8ec;}
+  .cond b{font-family:var(--hit);text-transform:uppercase;font-size:10px;letter-spacing:1px;color:var(--red);display:block;margin-bottom:3px;}
+  .wait{width:100%;text-align:center;color:var(--muted);font-size:12px;margin-top:24px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head">
+    <span class="wm">BLACKBOX<span class="dot">.</span></span>
+    <div class="toggle" id="loc"></div>
+  </div>
+  <div id="body" style="width:100%"><div class="wait">Carico il meteo…</div></div>
+</div>
+<script>
+const LOCS=[['Como',45.808,9.085],['Milano',45.464,9.190],['Lugano',46.005,8.951]];
+let cur=0;
+const WMO={0:['Sereno','☀️'],1:['Poco nuvoloso','🌤️'],2:['Parz. nuvoloso','⛅'],3:['Nuvoloso','☁️'],45:['Nebbia','🌫️'],48:['Nebbia','🌫️'],51:['Pioggerella','🌦️'],53:['Pioggerella','🌦️'],55:['Pioggerella','🌦️'],61:['Pioggia','🌧️'],63:['Pioggia','🌧️'],65:['Pioggia forte','🌧️'],71:['Neve','🌨️'],73:['Neve','🌨️'],75:['Neve','🌨️'],80:['Rovesci','🌦️'],81:['Rovesci','🌧️'],82:['Rovesci forti','⛈️'],95:['Temporale','⛈️'],96:['Temporale','⛈️'],99:['Temporale','⛈️']};
+const p=n=>String(n).padStart(2,'0');
+const hm=iso=>{const d=new Date(iso);return p(d.getHours())+':'+p(d.getMinutes());};
+const shift=(iso,min)=>{const d=new Date(new Date(iso).getTime()+min*60000);return p(d.getHours())+':'+p(d.getMinutes());};
+function buildLoc(){const t=document.getElementById('loc');t.innerHTML='';LOCS.forEach((l,i)=>{const b=document.createElement('button');b.textContent=l[0];if(i===cur)b.classList.add('on');b.onclick=()=>{cur=i;buildLoc();load();};t.appendChild(b);});}
+function condizioni(cloud,rain){
+  if(rain>=50) return ['Rischio pioggia','Alta probabilità di pioggia: prepara un piano B al coperto o rimanda l\'esterno.'];
+  if(cloud>=85) return ['Luce piatta','Cielo molto coperto: luce uniforme ma piatta — aggiungi contrasto in post o usa luci.'];
+  if(cloud>=35) return ['Luce morbida','Nuvolosità media: luce diffusa ideale per ritratti e interviste, ombre gentili.'];
+  return ['Cielo sereno','Sole pieno: ombre dure a mezzogiorno — sfrutta la golden hour per il look cinematografico.'];
+}
+async function load(){
+  const [name,lat,lon]=LOCS[cur]; const body=document.getElementById('body');
+  try{
+    const u='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,cloud_cover,wind_speed_10m,weather_code&daily=sunrise,sunset,precipitation_probability_max&timezone=auto&forecast_days=1';
+    const d=await (await fetch(u)).json();
+    const c=d.current, dy=d.daily;
+    const w=WMO[c.weather_code]||['—','🎬'];
+    const rain=dy.precipitation_probability_max[0];
+    const [ct,cs]=condizioni(c.cloud_cover,rain);
+    body.innerHTML=
+      '<div class="now"><div class="ico">'+w[1]+'</div>'+
+        '<div><div class="temp">'+Math.round(c.temperature_2m)+'°</div><div class="desc">'+w[0]+' · '+name+'</div></div>'+
+        '<div class="metrics">'+
+          '<div class="m"><div class="k">☁️ Nuvole</div><div class="v">'+c.cloud_cover+'%</div></div>'+
+          '<div class="m"><div class="k">🌧️ Pioggia</div><div class="v">'+rain+'%</div></div>'+
+          '<div class="m"><div class="k">💨 Vento</div><div class="v">'+Math.round(c.wind_speed_10m)+'</div></div>'+
+        '</div></div>'+
+      '<div class="golden">'+
+        '<div class="g"><div class="k">🌅 Golden hour mattino</div><div class="v">'+hm(dy.sunrise[0])+' – '+shift(dy.sunrise[0],60)+'</div><div class="s">alba '+hm(dy.sunrise[0])+'</div></div>'+
+        '<div class="g"><div class="k">🌇 Golden hour sera</div><div class="v">'+shift(dy.sunset[0],-60)+' – '+hm(dy.sunset[0])+'</div><div class="s">tramonto '+hm(dy.sunset[0])+'</div></div>'+
+      '</div>'+
+      '<div class="cond"><b>Condizioni riprese</b>'+ct+' — '+cs+'</div>';
+  }catch(e){ body.innerHTML='<div class="wait">Meteo non disponibile ora. Riprova più tardi.</div>'; }
+}
+buildLoc(); load(); setInterval(load,600000);
+</script></body></html>

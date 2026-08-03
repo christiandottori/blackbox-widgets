@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · Incassi attesi</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .live{display:flex;align-items:center;gap:7px;font-family:var(--hit);font-weight:700;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .live .dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(225,29,42,.5)}70%{box-shadow:0 0 0 8px rgba(225,29,42,0)}100%{box-shadow:0 0 0 0 rgba(225,29,42,0)}}
+  .big{font-family:var(--hit);font-weight:800;font-size:clamp(40px,12vw,84px);line-height:.95;margin-top:auto;}
+  .big span{color:var(--red);font-size:.4em;}
+  .sub{font-size:clamp(11px,2.4vw,14px);color:#cfcfd4;margin-top:8px;}
+  .foot{font-size:10px;color:#6a6a72;margin-top:12px;}
+  .wait{width:100%;text-align:center;color:var(--muted);font-size:12px;margin-top:20px;line-height:1.6;}
+  .bar{width:44px;height:3px;background:var(--red);margin-top:14px;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="live"><span class="dot"></span>Incassi attesi</span></div>
+  <div id="body" style="width:100%;display:flex;flex-direction:column;flex:1"><div class="wait">Recupero i dati…</div></div>
+</div>
+<script>
+const eur=n=>'€'+Math.round(n||0).toLocaleString('it-IT');
+function rel(iso){if(!iso)return'';const m=Math.round((Date.now()-new Date(iso))/60000);if(m<1)return'adesso';if(m<60)return m+' min fa';const h=Math.round(m/60);return h<24?h+'h fa':Math.round(h/24)+'g fa';}
+async function load(){
+  const body=document.getElementById('body');
+  try{
+    const d=await (await fetch('data/finance.json?t='+Date.now())).json();
+    if(!d.updatedAt){body.innerHTML='<div class="wait">In attesa della prima sincronizzazione.<br>Parte in automatico ogni 30 min.</div>';return;}
+    body.innerHTML='<div class="big">'+eur(d.incassiAttesi)+'</div>'+
+      '<div class="sub">da '+d.count+' preventivi accettati/firmati, non ancora saldati</div>'+
+      '<div class="bar"></div>'+
+      '<div class="foot">Aggiornato '+rel(d.updatedAt)+' · dal registro Preventivi & Contratti</div>';
+  }catch(e){body.innerHTML='<div class="wait">Dati non disponibili.</div>';}
+}
+load();setInterval(load,120000);
+</script></body></html>
