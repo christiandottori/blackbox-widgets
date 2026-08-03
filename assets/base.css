@@ -26,6 +26,7 @@
   }
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+input,select,textarea,button{min-width:0;font-family:inherit;}
 html,body{height:100%;}
 body{
   font-family:var(--sans); color:var(--ink);
@@ -44,3 +45,9 @@ body{
 .wm{font-family:var(--hit);font-weight:800;letter-spacing:.5px;}
 .kick{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);}
 .grain{display:none;}
+/* Colonne strette (sidebar Notion): evita overflow di head/toggle */
+@media (max-width:380px){
+  .head{flex-wrap:wrap;gap:8px;}
+  .toggle{flex-wrap:wrap;}
+  .top{flex-wrap:wrap;gap:6px;}
+}
