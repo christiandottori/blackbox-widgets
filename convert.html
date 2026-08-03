@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · EUR ⇄ CHF</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
   .card{align-items:flex-start;justify-content:flex-start;}
   .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:16px;}
@@ -10,14 +10,14 @@
   .conv{display:flex;align-items:center;gap:12px;width:100%;}
   .amt{flex:1;}
   .amt label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:block;margin-bottom:5px;}
-  .amt input{width:100%;background:#000;border:1px solid var(--line);border-radius:10px;color:#fff;font-family:var(--hit);font-weight:800;font-size:clamp(20px,4vw,30px);padding:12px 14px;}
+  .amt input{width:100%;background:var(--field);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:var(--hit);font-weight:800;font-size:clamp(20px,4vw,30px);padding:12px 14px;}
   .cur{font-family:var(--hit);font-weight:800;font-size:14px;color:var(--muted);padding-bottom:12px;}
   .swap{margin-top:18px;width:44px;height:44px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:18px;cursor:pointer;align-self:flex-end;flex-shrink:0;}
   .res{width:100%;margin-top:18px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:18px;}
   .res .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
   .res .big{font-family:var(--hit);font-weight:800;font-size:clamp(26px,6vw,46px);line-height:1;margin-top:8px;}
   .res .big span{color:var(--red);font-size:.5em;}
-  .rate{font-size:11px;color:#9a9aa2;margin-top:auto;padding-top:14px;}
+  .rate{font-size:11px;color:var(--muted);margin-top:auto;padding-top:14px;}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick" id="dir">EUR → CHF</span></div>

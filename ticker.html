@@ -1,27 +1,24 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Ticker</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
   .card{padding:0;overflow:hidden;position:relative;display:block;
-    background:linear-gradient(90deg,#0a0a0b,#141418,#0a0a0b);}
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .mq{position:absolute;inset:0;display:flex;align-items:center;overflow:hidden;}
   .row{display:inline-flex;align-items:center;flex-shrink:0;white-space:nowrap;
     padding-left:130px;will-change:transform;animation:marquee 30s linear infinite;}
   .row .it{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-    font-size:clamp(12px,3vw,17px);color:#e8e8ec;display:inline-flex;align-items:center;}
+    font-size:clamp(12px,3vw,16px);color:var(--ink2);display:inline-flex;align-items:center;}
   .row .sep{color:var(--red);margin:0 26px;font-size:.8em;}
   @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .card:hover .row{animation-play-state:paused;}
   .wm{position:absolute;left:0;top:0;bottom:0;z-index:3;display:flex;align-items:center;padding:0 18px;
-    background:var(--red);font-family:var(--hit);font-weight:800;font-size:clamp(12px,3vw,16px);color:#fff;letter-spacing:.5px;}
-  .fade{position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;}
-  .fade.r{right:0;background:linear-gradient(270deg,#0a0a0b,transparent);}
+    background:var(--red);font-family:var(--hit);font-weight:800;font-size:clamp(12px,3vw,16px);color:var(--onRed);letter-spacing:.5px;}
 </style></head>
 <body><div class="card">
   <div class="mq"><div class="row" id="row"></div></div>
-  <div class="fade r"></div>
-  <span class="wm">BLACKBOX<span style="color:#fff">.</span></span>
+  <span class="wm">BLACKBOX<span style="color:var(--onRed)">.</span></span>
 </div>
 <script>
 /* ==== messaggi del ticker — modificabili ==== */
@@ -35,5 +32,5 @@ const MESSAGES = [
 /* ============================================ */
 const row=document.getElementById('row');
 let unit=MESSAGES.map(m=>'<span class="it">'+m+'<span class="sep">●</span></span>').join('');
-row.innerHTML=unit+unit; // duplicato per loop continuo (-50%)
+row.innerHTML=unit+unit;
 </script></body></html>

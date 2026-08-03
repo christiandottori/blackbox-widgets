@@ -1,20 +1,20 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Payoff</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
   .card{align-items:center;text-align:center;justify-content:center;
-    background:radial-gradient(90% 130% at 50% -10%,rgba(225,29,42,.18),transparent 60%),var(--bg);}
-  .wm{font-size:clamp(22px,6vw,46px);letter-spacing:1px;}
+    background:radial-gradient(70% 90% at 50% -10%,rgba(225,29,42,.10),transparent 65%);}
+  .wm{font-size:clamp(22px,6vw,46px);letter-spacing:1px;color:var(--ink);}
   .line{height:clamp(20px,4vw,34px);margin-top:14px;position:relative;width:100%;}
   .line span{position:absolute;left:0;right:0;font-family:var(--hit);font-weight:700;
-    text-transform:uppercase;letter-spacing:2px;font-size:clamp(11px,2.6vw,17px);color:#cfcfd4;
+    text-transform:uppercase;letter-spacing:2px;font-size:clamp(11px,2.6vw,17px);color:var(--ink2);
     opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s;}
   .line span.on{opacity:1;transform:none;}
   .line span em{color:var(--red);font-style:normal;}
-  .bar{width:50px;height:3px;background:var(--red);margin:18px auto 0;}
+  .bar{width:50px;height:3px;background:var(--red);margin:18px auto 0;border-radius:2px;}
 </style></head>
-<body><div class="card"><div class="grain"></div>
+<body><div class="card">
   <div class="wm">BLACKBOX<span class="dot">.</span></div>
   <div class="line" id="line"></div>
   <div class="bar"></div>

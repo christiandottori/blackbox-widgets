@@ -1,26 +1,19 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Header</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
-  .card{align-items:center;justify-content:center;text-align:center;overflow:hidden;
-    background:#08080a;}
-  .glow{position:absolute;width:120%;height:200%;top:-60%;left:-10%;
-    background:radial-gradient(50% 40% at 50% 30%,rgba(225,29,42,.28),transparent 70%);}
-  .sheen{position:absolute;top:0;bottom:0;width:40%;
-    background:linear-gradient(100deg,transparent,rgba(255,255,255,.06),transparent);
-    animation:sweep 6s ease-in-out infinite;}
-  @keyframes sweep{0%{left:-45%}55%,100%{left:110%}}
-  .wm{position:relative;z-index:2;font-family:var(--hit);font-weight:800;letter-spacing:2px;
-    font-size:clamp(34px,9vw,76px);line-height:1;text-transform:uppercase;}
+  .card{align-items:center;justify-content:center;text-align:center;
+    background:radial-gradient(70% 60% at 50% 0%,rgba(225,29,42,.10),transparent 70%);}
+  .wm{font-family:var(--hit);font-weight:800;letter-spacing:1px;color:var(--ink);
+    font-size:clamp(30px,9vw,70px);line-height:1;text-transform:uppercase;}
   .wm .dot{color:var(--red);}
-  .pay{position:relative;z-index:2;font-family:var(--hit);font-weight:700;text-transform:uppercase;
-    letter-spacing:clamp(3px,1.4vw,7px);font-size:clamp(10px,2.4vw,15px);color:#cfcfd4;margin-top:14px;}
-  .meta{position:relative;z-index:2;font-size:clamp(9px,1.8vw,12px);color:#6a6a72;margin-top:16px;letter-spacing:1px;}
-  .line{position:relative;z-index:2;width:60px;height:3px;background:var(--red);margin:16px auto 0;}
+  .pay{font-family:var(--hit);font-weight:700;text-transform:uppercase;
+    letter-spacing:clamp(3px,1.4vw,7px);font-size:clamp(10px,2.4vw,15px);color:var(--muted);margin-top:14px;}
+  .line{width:56px;height:3px;background:var(--red);margin:16px auto 0;border-radius:2px;}
+  .meta{font-size:clamp(9px,1.8vw,12px);color:var(--faint);margin-top:16px;letter-spacing:1px;}
 </style></head>
 <body><div class="card">
-  <div class="glow"></div><div class="grain"></div><div class="sheen"></div>
   <div class="wm">BLACKBOX<span class="dot">.</span></div>
   <div class="pay">Oltre l'inquadratura.</div>
   <div class="line"></div>

@@ -1,28 +1,28 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Brand Kit</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
   .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
   .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;}
-  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);color:var(--ink);}
   .head .kick{font-size:clamp(8px,1.5vw,11px);letter-spacing:2px;}
   .sw{display:flex;gap:10px;width:100%;flex-wrap:wrap;}
   .c{flex:1;min-width:80px;border:1px solid var(--line);border-radius:11px;overflow:hidden;cursor:pointer;}
   .c .chip{height:52px;}
   .c .meta{padding:8px 10px;}
-  .c .nm{font-size:10px;color:#cfcfd4;font-weight:600;}
+  .c .nm{font-size:10px;color:var(--ink);font-weight:600;}
   .c .hx{font-size:10px;color:var(--muted);font-family:var(--hit);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
   .fonts{display:flex;gap:12px;width:100%;margin-top:16px;}
-  .fbox{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .fbox{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
   .fbox .t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
-  .fbox .big{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:22px;margin-top:6px;}
-  .fbox .body{font-family:var(--sans);font-size:13px;color:#cfcfd4;margin-top:6px;line-height:1.4;}
+  .fbox .big{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:22px;margin-top:6px;color:var(--ink);}
+  .fbox .body{font-family:var(--sans);font-size:13px;color:var(--ink2);margin-top:6px;line-height:1.4;}
   .fbox .nn{font-size:10px;color:var(--red);font-family:var(--hit);font-weight:700;margin-top:8px;letter-spacing:1px;}
-  .toast{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:11px;font-weight:600;padding:7px 14px;border-radius:100px;opacity:0;transition:opacity .3s;}
+  .toast{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:var(--red);color:var(--onRed);font-size:11px;font-weight:600;padding:7px 14px;border-radius:100px;opacity:0;transition:opacity .3s;}
   .toast.on{opacity:1;}
 </style></head>
-<body><div class="card"><div class="grain"></div>
+<body><div class="card">
   <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="kick">Brand kit</span></div>
   <div class="sw" id="sw"></div>
   <div class="fonts">

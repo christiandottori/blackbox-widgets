@@ -1,23 +1,23 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Showreel</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
-  .card{padding:0;overflow:hidden;align-items:stretch;justify-content:stretch;}
-  .frame{position:relative;flex:1;width:100%;background:#000;}
+  .card{padding:0;align-items:stretch;justify-content:stretch;}
+  .frame{position:relative;flex:1;width:100%;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);}
   .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
   .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:radial-gradient(60% 60% at 50% 40%,rgba(225,29,42,.18),transparent 60%),#0a0a0b;text-align:center;padding:20px;}
-  .ph .play{width:74px;height:74px;border-radius:50%;background:rgba(225,29,42,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 16px 50px rgba(225,29,42,.4);}
-  .ph .play .tri{width:0;height:0;border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px;}
-  .ph .t{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:18px;margin-top:16px;}
+    background:radial-gradient(60% 60% at 50% 42%,rgba(225,29,42,.12),transparent 62%);text-align:center;padding:20px;}
+  .ph .play{width:70px;height:70px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(225,29,42,.35);}
+  .ph .play .tri{width:0;height:0;border-left:19px solid var(--onRed);border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px;}
+  .ph .t{font-family:var(--hit);font-weight:800;text-transform:uppercase;font-size:17px;margin-top:16px;color:var(--ink);}
   .ph .s{font-size:12px;color:var(--muted);margin-top:6px;}
-  .tag{position:absolute;top:14px;left:16px;z-index:3;font-family:var(--hit);font-weight:800;font-size:13px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);}
-  .tag .dot{color:var(--red);}
+  .tag{position:absolute;top:12px;left:12px;z-index:3;font-family:var(--hit);font-weight:800;font-size:12px;
+    color:var(--onRed);background:var(--red);padding:4px 10px;border-radius:100px;}
 </style></head>
 <body><div class="card">
   <div class="frame" id="frame">
-    <div class="tag">BLACKBOX<span class="dot">.</span> · Showreel</div>
+    <div class="tag">BLACKBOX. · Showreel</div>
   </div>
 </div>
 <script>

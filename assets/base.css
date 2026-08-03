@@ -1,37 +1,44 @@
-/* BlackBox widgets — base brand styles */
+/* BlackBox widgets — base (Notion-friendly, theme-aware) */
 @font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-800.ttf') format('truetype');font-weight:800;font-display:swap;}
 @font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-700.ttf') format('truetype');font-weight:700;font-display:swap;}
 @font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-500.ttf') format('truetype');font-weight:500;font-display:swap;}
 @font-face{font-family:'Hitmarker';src:url('assets/fonts/hitmarker-400.ttf') format('truetype');font-weight:400;font-display:swap;}
+
 :root{
-  --red:#e11d2a; --bg:#0a0a0b; --bg2:#141418;
-  --ink:#ffffff; --muted:#8a8a92; --line:#232329;
+  --red:#e11d2a; --red2:#ff5763;
+  /* LIGHT (default, tema chiaro di Notion) */
+  --ink:#37352f; --ink2:#5c574e; --muted:#8a8579; --faint:#b0a99d;
+  --line:rgba(0,0,0,.09); --surface:rgba(0,0,0,.035); --surface2:rgba(0,0,0,.06);
+  --field:rgba(0,0,0,.05); --track:rgba(0,0,0,.10); --onRed:#ffffff;
   --hit:'Hitmarker',-apple-system,Arial,sans-serif;
   --sans:'Inter',-apple-system,'Segoe UI',Arial,sans-serif;
+  /* alias legacy usati nei widget */
+  --bg:transparent; --bg2:rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#ececed; --ink2:#c3c2c0; --muted:#8f8f95; --faint:#67676e;
+    --line:rgba(255,255,255,.11); --surface:rgba(255,255,255,.05); --surface2:rgba(255,255,255,.09);
+    --field:rgba(255,255,255,.07); --track:rgba(255,255,255,.12);
+    --bg2:rgba(255,255,255,.05);
+  }
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;}
-/* Il "gap" dietro gli angoli arrotondati assume il colore dello sfondo di Notion
-   in base al tema (chiaro/scuro), così gli angoli si fondono e sembra arrotondato
-   senza triangoli. --notionbg = colore pagina Notion per tema. */
-:root{ --notionbg:#ffffff; }
-@media (prefers-color-scheme: dark){ :root{ --notionbg:#191919; } }
 body{
   font-family:var(--sans); color:var(--ink);
-  background:var(--notionbg); -webkit-font-smoothing:antialiased;
-  display:flex; align-items:stretch; justify-content:stretch;
-  overflow:hidden;
+  background:transparent; -webkit-font-smoothing:antialiased;
+  display:flex; align-items:stretch; justify-content:stretch; overflow:hidden;
 }
+/* Trasparente e senza bordi: si fonde con la pagina Notion (chiara o scura). */
 .card{
-  position:relative; flex:1; margin:0; border-radius:16px;
-  background:radial-gradient(120% 140% at 85% -20%,rgba(225,29,42,.14),transparent 55%),var(--bg);
-  border:none; overflow:hidden;
+  position:relative; flex:1; margin:0; border:none; border-radius:0;
+  background:transparent; overflow:hidden;
   display:flex; flex-direction:column; justify-content:center;
-  padding:clamp(16px,4vw,34px);
+  padding:clamp(10px,3vw,22px);
 }
 .hit{font-family:var(--hit);}
 .dot{color:var(--red);}
 .wm{font-family:var(--hit);font-weight:800;letter-spacing:.5px;}
 .kick{font-family:var(--hit);font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);}
-.grain{position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background:radial-gradient(120% 120% at 15% 110%,rgba(60,70,90,.20),transparent 55%);}
+.grain{display:none;}

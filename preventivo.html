@@ -1,26 +1,26 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Preventivo a ore</title>
-<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="assets/base.css?v=5">
 <style>
   .card{align-items:flex-start;justify-content:flex-start;overflow:auto;}
   .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:14px;gap:10px;}
   .head .wm{font-size:clamp(13px,2.4vw,17px);}
-  .toggle{display:flex;background:#000;border:1px solid var(--line);border-radius:100px;padding:3px;}
+  .toggle{display:flex;background:var(--field);border:1px solid var(--line);border-radius:100px;padding:3px;}
   .toggle button{background:transparent;border:none;color:var(--muted);font-family:var(--hit);font-weight:700;font-size:11px;letter-spacing:1px;padding:6px 14px;border-radius:100px;cursor:pointer;}
   .toggle button.on{background:var(--red);color:#fff;}
   .grid{display:flex;gap:14px;width:100%;}
   .col{flex:1;}
   .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);}
-  .row .l{font-size:12.5px;color:#cfcfd4;}
+  .row .l{font-size:12.5px;color:var(--ink2);}
   .row .l small{display:block;color:var(--muted);font-size:10px;margin-top:1px;}
-  .row input{width:60px;background:#000;border:1px solid var(--line);border-radius:7px;color:#fff;padding:6px 8px;font-family:var(--sans);text-align:center;}
+  .row input{width:60px;background:var(--field);border:1px solid var(--line);border-radius:7px;color:var(--ink);padding:6px 8px;font-family:var(--sans);text-align:center;}
   .row input::-webkit-inner-spin-button{opacity:.4;}
   .tot{width:100%;margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:flex;align-items:baseline;justify-content:space-between;}
   .tot .t{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
   .tot .big{font-family:var(--hit);font-weight:800;font-size:clamp(24px,6vw,42px);}
   .tot .big span{color:var(--red);font-size:.5em;}
-  .note{font-size:10px;color:#6a6a72;margin-top:10px;}
+  .note{font-size:10px;color:var(--faint);margin-top:10px;}
 </style></head>
 <body><div class="card"><div class="grain"></div>
   <div class="head">
