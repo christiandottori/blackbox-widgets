@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlackBox · KPI live</title>
+<link rel="stylesheet" href="assets/base.css?v=4">
+<style>
+  .card{align-items:flex-start;justify-content:flex-start;}
+  .head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:clamp(10px,2vw,18px);}
+  .head .wm{font-size:clamp(13px,2.4vw,17px);}
+  .live{display:flex;align-items:center;gap:7px;font-family:var(--hit);font-weight:700;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .live .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(225,29,42,.6);animation:pulse 2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(225,29,42,.5)}70%{box-shadow:0 0 0 8px rgba(225,29,42,0)}100%{box-shadow:0 0 0 0 rgba(225,29,42,0)}}
+  .row{display:flex;gap:clamp(8px,2vw,16px);width:100%;flex:1;}
+  .tile{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:clamp(12px,2.4vw,20px);display:flex;flex-direction:column;}
+  .tile .t{font-size:clamp(9px,1.6vw,12px);color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;}
+  .tile .big{font-family:var(--hit);font-weight:800;font-size:clamp(24px,5.5vw,46px);line-height:1;margin-top:auto;}
+  .tile .big span{color:var(--red);font-size:.55em;}
+  .tile .sub{font-size:clamp(9px,1.5vw,12px);color:#9a9aa2;margin-top:6px;}
+  .foot{width:100%;font-size:10px;color:#6a6a72;margin-top:12px;}
+  .wait{width:100%;text-align:center;color:var(--muted);font-size:12px;margin-top:20px;line-height:1.6;}
+</style></head>
+<body><div class="card"><div class="grain"></div>
+  <div class="head"><span class="wm">BLACKBOX<span class="dot">.</span></span><span class="live"><span class="dot"></span>Pipeline live</span></div>
+  <div id="body"><div class="wait">Recupero i dati dal Notion…</div></div>
+</div>
+<script>
+const eur = n => '€' + (n||0).toLocaleString('it-IT');
+function rel(iso){ if(!iso) return ''; const m=Math.round((Date.now()-new Date(iso))/60000);
+  if(m<1)return 'adesso'; if(m<60)return m+' min fa'; const h=Math.round(m/60); if(h<24)return h+'h fa'; return Math.round(h/24)+'g fa'; }
+async function load(){
+  try{
+    const d = await (await fetch('data/kpi.json?t='+Date.now())).json();
+    const body = document.getElementById('body');
+    if(!d.updatedAt){ body.innerHTML='<div class="wait">In attesa della prima sincronizzazione.<br>Parte in automatico ogni 30 min.</div>'; return; }
+    body.innerHTML =
+      '<div class="row">'+
+      '<div class="tile"><div class="t">Valore pipeline</div><div class="big">'+eur(d.pipelineValue)+'</div><div class="sub">'+d.activeCount+' progetti attivi</div></div>'+
+      '<div class="tile"><div class="t">Consegnati</div><div class="big">'+d.wonCount+'</div><div class="sub">'+eur(d.wonValue)+' fatturato</div></div>'+
+      '<div class="tile"><div class="t">Lead aperti</div><div class="big">'+d.leadCount+'</div><div class="sub">su '+d.totalCount+' totali</div></div>'+
+      '</div>'+
+      '<div class="foot">Aggiornato '+rel(d.updatedAt)+' · dal DB «Progetti & clienti»</div>';
+  }catch(e){ document.getElementById('body').innerHTML='<div class="wait">Dati non disponibili.</div>'; }
+}
+load(); setInterval(load, 120000);
+</script></body></html>

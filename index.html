@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BlackBox · Widgets</title>
-<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/base.css?v=4">
 <style>
   body{display:block;overflow:auto;background:var(--bg);}
   .wrap{max-width:1040px;margin:0 auto;padding:48px 22px 80px;}
@@ -55,7 +55,9 @@ const W=[
   {f:'convert.html',  t:'EUR ⇄ CHF',         d:'Convertitore valuta con cambio live (utile per il Ticino).'},
   {f:'preventivo.html',t:'Preventivo lampo', d:'Stima rapida: giornate riprese + montaggio + extra.'},
   {f:'timer.html',    t:'Focus Timer',       d:'Pomodoro brandizzato per le sessioni di montaggio.'},
-  {f:'brand.html',    t:'Brand Kit',         d:'Swatch colori (clic per copiare hex) + font di riferimento.'}
+  {f:'brand.html',    t:'Brand Kit',         d:'Swatch colori (clic per copiare hex) + font di riferimento.'},
+  {f:'kpi-live.html', t:'KPI live (Notion)', d:'Pipeline, progetti attivi e consegnati DAL VIVO dal DB Progetti & clienti.'},
+  {f:'deadlines.html',t:'Prossime consegne', d:'Scadenze reali dal Notion con countdown. Sincronizzate ogni 30 min.'}
 ];
 const grid=document.getElementById('grid');
 W.forEach(w=>{

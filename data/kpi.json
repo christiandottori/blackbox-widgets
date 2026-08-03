@@ -1,0 +1,10 @@
+{
+  "updatedAt": null,
+  "pipelineValue": 0,
+  "activeCount": 0,
+  "wonValue": 0,
+  "wonCount": 0,
+  "leadCount": 0,
+  "totalCount": 0,
+  "byStato": { "Lead": 0, "In corso": 0, "In consegna": 0, "Consegnato": 0, "Perso": 0 }
+}
