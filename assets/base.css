@@ -10,6 +10,7 @@
   --ink:#37352f; --ink2:#5c574e; --muted:#8a8579; --faint:#b0a99d;
   --line:rgba(0,0,0,.09); --surface:rgba(0,0,0,.035); --surface2:rgba(0,0,0,.06);
   --field:rgba(0,0,0,.05); --track:rgba(0,0,0,.10); --onRed:#ffffff;
+  --pagebg:#ffffff;   /* colore pagina Notion (tema chiaro) */
   --hit:'Hitmarker',-apple-system,Arial,sans-serif;
   --sans:'Inter',-apple-system,'Segoe UI',Arial,sans-serif;
   /* alias legacy usati nei widget */
@@ -21,13 +22,14 @@
     --line:rgba(255,255,255,.11); --surface:rgba(255,255,255,.05); --surface2:rgba(255,255,255,.09);
     --field:rgba(255,255,255,.07); --track:rgba(255,255,255,.12);
     --bg2:rgba(255,255,255,.05);
+    --pagebg:#191919;   /* colore pagina Notion (tema scuro) */
   }
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;}
 body{
   font-family:var(--sans); color:var(--ink);
-  background:transparent; -webkit-font-smoothing:antialiased;
+  background:var(--pagebg); -webkit-font-smoothing:antialiased;
   display:flex; align-items:stretch; justify-content:stretch; overflow:hidden;
 }
 /* Trasparente e senza bordi: si fonde con la pagina Notion (chiara o scura). */
