@@ -13,14 +13,17 @@
 html,body{height:100%;}
 body{
   font-family:var(--sans); color:var(--ink);
-  background:transparent; -webkit-font-smoothing:antialiased;
+  background:var(--bg); -webkit-font-smoothing:antialiased;
   display:flex; align-items:stretch; justify-content:stretch;
   overflow:hidden;
 }
+/* NB: niente border-radius — negli embed Notion l'iframe ha angoli quadri
+   e uno sfondo (bianco in tema chiaro): con gli angoli arrotondati
+   comparivano triangoli bianchi. Il widget riempie tutto fino al bordo. */
 .card{
-  position:relative; flex:1; margin:0; border-radius:18px;
+  position:relative; flex:1; margin:0; border-radius:0;
   background:radial-gradient(120% 140% at 85% -20%,rgba(225,29,42,.14),transparent 55%),var(--bg);
-  border:1px solid var(--line); overflow:hidden;
+  border:none; overflow:hidden;
   display:flex; flex-direction:column; justify-content:center;
   padding:clamp(16px,4vw,34px);
 }
