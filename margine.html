@@ -42,10 +42,10 @@
     </div>
     <div class="col">
       <div class="lab">Costi</div>
-      <div class="row"><span class="l">Troupe / freelance</span><input class="cost" type="number" value="1200" min="0"></div>
-      <div class="row"><span class="l">Noleggi attrezzatura</span><input class="cost" type="number" value="500" min="0"></div>
-      <div class="row"><span class="l">Trasferte / vitto</span><input class="cost" type="number" value="300" min="0"></div>
-      <div class="row"><span class="l">Altro</span><input class="cost" type="number" value="0" min="0"></div>
+      <div class="row"><span class="l">Troupe / freelance</span><input class="cost" data-k="cost1" type="number" value="1200" min="0"></div>
+      <div class="row"><span class="l">Noleggi attrezzatura</span><input class="cost" data-k="cost2" type="number" value="500" min="0"></div>
+      <div class="row"><span class="l">Trasferte / vitto</span><input class="cost" data-k="cost3" type="number" value="300" min="0"></div>
+      <div class="row"><span class="l">Altro</span><input class="cost" data-k="cost4" type="number" value="0" min="0"></div>
     </div>
   </div>
   <div class="res">
@@ -69,4 +69,5 @@ document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
 document.getElementById('cE').onclick=()=>{cur='€';document.getElementById('cE').classList.add('on');document.getElementById('cC').classList.remove('on');calc();};
 document.getElementById('cC').onclick=()=>{cur='CHF';document.getElementById('cC').classList.add('on');document.getElementById('cE').classList.remove('on');calc();};
 calc();
-</script></body></html>
+</script><script src="assets/persist.js?v=1"></script>
+</body></html>

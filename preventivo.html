@@ -54,7 +54,7 @@ function build(){
     const [name,rate]=it;
     const div=document.createElement('div'); div.className='row';
     div.innerHTML='<div class="l">'+name+'<small>'+cur+' '+rate+'/h</small></div>';
-    const inp=document.createElement('input'); inp.type='number'; inp.min=0; inp.value=hours[name]||0;
+    const inp=document.createElement('input'); inp.type='number'; inp.min=0; inp.value=hours[name]||0; inp.dataset.k='h_'+name.replace(/\s+/g,'_');
     inp.oninput=()=>{hours[name]=parseFloat(inp.value)||0;calc();};
     div.appendChild(inp); (i<3?a:b).appendChild(div);
   });
@@ -68,4 +68,5 @@ function calc(){
 document.getElementById('bIT').onclick=()=>{country='IT';document.getElementById('bIT').classList.add('on');document.getElementById('bCH').classList.remove('on');build();};
 document.getElementById('bCH').onclick=()=>{country='CH';document.getElementById('bCH').classList.add('on');document.getElementById('bIT').classList.remove('on');build();};
 build();
-</script></body></html>
+</script><script src="assets/persist.js?v=1"></script>
+</body></html>
